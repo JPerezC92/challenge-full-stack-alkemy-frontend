@@ -1,4 +1,5 @@
 import React from "react";
+import { FAILED_TO_FETCH } from "src/modules/shared/utils/constants";
 import { useLoading } from "./useLoading";
 
 export const useRequest = (
@@ -6,9 +7,14 @@ export const useRequest = (
   deps: unknown[] | undefined = []
 ) => {
   const { isLoading, finishLoading, startLoading } = useLoading();
+  const abortControllerRef = React.useRef<AbortController>();
 
   React.useEffect(() => {
+    abortControllerRef.current?.abort();
+
     const abortController = new AbortController();
+
+    abortControllerRef.current = abortController;
 
     (async () => {
       try {
@@ -18,6 +24,10 @@ export const useRequest = (
 
         finishLoading();
       } catch (error) {
+        if (error instanceof TypeError && error.message === FAILED_TO_FETCH) {
+          return console.log(error.message);
+        }
+
         if ((error as DOMException).code !== DOMException.ABORT_ERR) {
           throw error;
         }

@@ -26,7 +26,6 @@ export const BudgetBalance: React.FC<BudgetBalanceProps> = ({
 
       _budgetBalanceStore.updateBalance(balance);
     },
-
     [budgetBalanceStore, budgetsRepository]
   );
 

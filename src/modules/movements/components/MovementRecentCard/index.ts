@@ -1,0 +1,1 @@
+export {MovementRecentCard} from './MovementRecentCard'

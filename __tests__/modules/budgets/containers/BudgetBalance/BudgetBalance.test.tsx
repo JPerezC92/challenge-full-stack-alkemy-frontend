@@ -1,5 +1,4 @@
 import { render, renderHook, waitFor } from "@testing-library/react";
-import React from "react";
 
 import { BudgetBalance } from "src/modules/budgets/containers/BudgetBalance";
 import * as useNodeBudgetsRepository from "src/modules/budgets/service/useNodeBudgets.repository";

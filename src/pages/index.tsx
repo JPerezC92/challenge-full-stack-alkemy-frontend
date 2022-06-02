@@ -3,12 +3,15 @@ import Head from "next/head";
 import { BudgetBalance } from "src/modules/budgets/containers/BudgetBalance";
 import { useNodeBudgetsRepository } from "src/modules/budgets/service/useNodeBudgets.repository";
 import { useBudgetBalanceState } from "src/modules/budgets/store/useBalanceState";
+import { MovementsMostRecents } from "src/modules/movements/containers/MovementsMostRecents";
+import { useNodeMovementsRepository } from "src/modules/movements/service/useNodeMovements.repository";
 import styles from "styles/Home.module.css";
 
 const HomePage: NextPage = () => {
   const { balance, budgetBalanceStore } = useBudgetBalanceState();
   const budgetsRepository = useNodeBudgetsRepository();
 
+  const movementsRepository = useNodeMovementsRepository();
   return (
     <div className={styles.container}>
       <Head>
@@ -24,7 +27,7 @@ const HomePage: NextPage = () => {
           budgetBalanceStore={budgetBalanceStore}
         />
 
-        <p>{balance}</p>
+        <MovementsMostRecents movementsRepository={movementsRepository} />
       </main>
     </div>
   );
