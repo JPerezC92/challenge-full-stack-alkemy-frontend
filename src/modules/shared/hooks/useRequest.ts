@@ -39,7 +39,7 @@ export const useRequest = (
       abortController.abort();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, [finishLoading, startLoading, ...deps]);
 
-  return { isLoading: isLoading };
+  return { isLoading };
 };

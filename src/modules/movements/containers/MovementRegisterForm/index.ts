@@ -1,0 +1,1 @@
+export {MovementRegisterForm} from './MovementRegisterForm'

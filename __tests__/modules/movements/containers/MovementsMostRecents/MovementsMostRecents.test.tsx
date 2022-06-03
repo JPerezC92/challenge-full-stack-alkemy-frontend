@@ -2,6 +2,7 @@ import { render, waitFor } from "@testing-library/react";
 import { MovementsMostRecents } from "src/modules/movements/containers/MovementsMostRecents";
 import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
 import { MovementType } from "src/modules/movements/models/MovementType";
+import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import * as useNodeMovementsRepository from "src/modules/movements/service/useNodeMovements.repository";
 import { OrderType } from "src/modules/shared/models/OrderType";
 
@@ -21,7 +22,7 @@ const query = jest.fn().mockResolvedValue(movementList);
 
 jest
   .spyOn(useNodeMovementsRepository, "useNodeMovementsRepository")
-  .mockReturnValue(() => ({ query }));
+  .mockReturnValue(() => ({ query } as unknown as MovementsRepository));
 
 describe("MovementsMostRecents container", () => {
   beforeEach(() => {

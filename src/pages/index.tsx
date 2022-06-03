@@ -1,13 +1,15 @@
-import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { BudgetBalance } from "src/modules/budgets/containers/BudgetBalance";
 import { useNodeBudgetsRepository } from "src/modules/budgets/service/useNodeBudgets.repository";
 import { useBudgetBalanceState } from "src/modules/budgets/store/useBalanceState";
 import { MovementsMostRecents } from "src/modules/movements/containers/MovementsMostRecents";
 import { useNodeMovementsRepository } from "src/modules/movements/service/useNodeMovements.repository";
+import { MainLayout } from "src/modules/shared/components/MainLayout";
+import { mainRoutes } from "src/modules/shared/routes/web";
 import styles from "styles/Home.module.css";
 
-const HomePage: NextPage = () => {
+export default function HomePage() {
   const { balance, budgetBalanceStore } = useBudgetBalanceState();
   const budgetsRepository = useNodeBudgetsRepository();
 
@@ -31,6 +33,12 @@ const HomePage: NextPage = () => {
       </main>
     </div>
   );
-};
+}
 
-export default HomePage;
+HomePage.getLayout = function (page: React.ReactElement) {
+  return (
+    <>
+      <MainLayout>{page}</MainLayout>
+    </>
+  );
+};

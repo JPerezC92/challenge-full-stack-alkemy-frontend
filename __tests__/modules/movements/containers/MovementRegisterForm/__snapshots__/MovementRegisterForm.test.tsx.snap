@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovementRegisterForm container should match the snapshot 1`] = `
+<form
+  onSubmit={[Function]}
+  role="form"
+>
+  <div>
+    <label
+      htmlFor=":r0:concept"
+    >
+      Concept
+    </label>
+    <input
+      id=":r0:concept"
+      name="concept"
+      onChange={[Function]}
+      required={true}
+      type="text"
+      value=""
+    />
+  </div>
+  <div>
+    <label
+      htmlFor=":r0:amount"
+    >
+      Amount
+    </label>
+    <input
+      id=":r0:amount"
+      name="amount"
+      onChange={[Function]}
+      required={true}
+      type="number"
+      value=""
+    />
+  </div>
+  <div>
+    <label
+      htmlFor=":r0:type"
+    >
+      Type
+    </label>
+    <select
+      id=":r0:type"
+      name="type"
+      onChange={[Function]}
+      required={true}
+      value=""
+    >
+      <option
+        disabled={true}
+        value=""
+      >
+        Select a type
+      </option>
+      <option
+        value="income"
+      >
+        income
+      </option>
+      <option
+        value="expense"
+      >
+        expense
+      </option>
+    </select>
+  </div>
+  <button
+    type="submit"
+  >
+    Save
+  </button>
+</form>
+`;

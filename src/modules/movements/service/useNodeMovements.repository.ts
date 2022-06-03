@@ -1,8 +1,10 @@
 import React from "react";
+import { JsendStatus } from "src/modules/shared/service/JsendResponse";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
 import { BASE_API_URL } from "src/modules/shared/utils/constants";
 import { MovementEndpoint } from "../dto/MovementEndpoint";
 import { MovementsGetEndpoint } from "../dto/MovementsGetEndpoint";
+import { MovementsPostEndpoint } from "../dto/MovementsPostEndpoint";
 import { MovementsRepository } from "./MovementsRepository";
 
 export function useNodeMovementsRepository(): MyRepository<MovementsRepository> {
@@ -25,6 +27,21 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
           (await response.json()) as MovementsGetEndpoint;
 
         return movementsGetEndpoint.data;
+      },
+      create: async (movementCreateDto): Promise<void> => {
+        const response = await fetch(`${movementsApiUrl}`, {
+          body: JSON.stringify(movementCreateDto),
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+          signal: abortController.signal,
+        });
+
+        const movementsPostEndpoint =
+          (await response.json()) as MovementsPostEndpoint;
+
+        if (movementsPostEndpoint.status !== JsendStatus.success) {
+          console.log({ movementsPostEndpoint });
+        }
       },
     };
   }, []);
