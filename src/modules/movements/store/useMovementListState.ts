@@ -1,6 +1,6 @@
 import React from "react";
+import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
 import { MyStore } from "src/modules/shared/store/MyStore";
-import { MovementEndpoint } from "../dto/MovementEndpoint";
 import { MovementListStore } from "./MovementListStore";
 
 export function useMovementListState() {
