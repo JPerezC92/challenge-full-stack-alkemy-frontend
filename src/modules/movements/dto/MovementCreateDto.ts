@@ -1,4 +1,4 @@
-import { MovementType } from "../models/MovementType";
+import { MovementType } from "src/modules/movements/models/MovementType";
 
 export interface MovementCreateDto {
   concept: string;
