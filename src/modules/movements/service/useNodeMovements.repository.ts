@@ -12,11 +12,17 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
     const movementsApiUrl = `${BASE_API_URL}/movements`;
 
     return {
-      query: async ({ page, limit, order }): Promise<MovementEndpoint[]> => {
+      query: async ({
+        page,
+        limit,
+        order,
+        movementType,
+      }): Promise<MovementEndpoint[]> => {
         const searchParams = new URLSearchParams();
         if (page) searchParams.set("page", page.toString());
         if (limit) searchParams.set("limit", limit.toString());
         if (order) searchParams.set("order", order);
+        if (movementType) searchParams.set("movement-type", movementType);
 
         const response = await fetch(
           `${movementsApiUrl}/?${searchParams.toString()}`,

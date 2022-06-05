@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React, { useState } from "react";
 import { movementsRoutes } from "src/modules/shared/routes/web";
 import { MovementRegisterForm } from "../../containers/MovementRegisterForm";
 import { useNodeMovementsRepository } from "../../service/useNodeMovements.repository";
@@ -14,6 +13,7 @@ export const MovementsLayout: React.FC<MovementsLayoutProps> = ({
   children,
 }) => {
   const movementsRepository = useNodeMovementsRepository();
+
   return (
     <>
       <br />
