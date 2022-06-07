@@ -16,7 +16,7 @@ const movementList = Array(10)
       id: (index + 1).toString(),
       amount: 1000 * (index + 1),
       concept: "move",
-      date: new Date(),
+      date: `2020-01-${index + 1}`,
       type: MovementType.EXPENSE,
     })
   );

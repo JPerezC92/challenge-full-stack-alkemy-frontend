@@ -4,6 +4,6 @@ export interface MovementEndpoint {
   id: string;
   concept: string;
   amount: number;
-  date: Date;
+  date: string;
   type: MovementType;
 }

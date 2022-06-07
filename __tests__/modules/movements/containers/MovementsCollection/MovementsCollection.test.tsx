@@ -15,7 +15,7 @@ const movementList: MovementEndpoint[] = Array.from({ length: 10 }).map(
     type: MovementType.INCOME,
     amount: 1000 * (index + 1),
     concept: `concept ${index + 1}`,
-    date: new Date(),
+    date: `2020-01-${index + 1}`,
   })
 );
 
