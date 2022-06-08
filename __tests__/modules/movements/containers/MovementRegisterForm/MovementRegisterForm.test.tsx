@@ -1,5 +1,4 @@
 import { act, fireEvent, render } from "@testing-library/react";
-import renderer from "react-test-renderer";
 import { MovementRegisterForm } from "src/modules/movements/containers/MovementRegisterForm";
 import { MovementCreateDto } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
@@ -16,23 +15,12 @@ jest
   .mockReturnValue(() => movementsRepository);
 
 describe("MovementRegisterForm container", () => {
-  test("should match the snapshot", async () => {
-    const component = renderer
-      .create(
-        <MovementRegisterForm
-          movementsRepository={useNodeMovementsRepository.useNodeMovementsRepository()}
-        />
-      )
-      .toJSON();
-
-    expect(component).toMatchSnapshot();
-  });
-
   test("should call MovementsRepository.create with the correct parameters", async () => {
     const movementCreateDto: MovementCreateDto = {
       amount: 1000,
       concept: "concept",
       type: MovementType.INCOME,
+      date: "2020-01-01",
     };
 
     const component = render(
@@ -42,9 +30,10 @@ describe("MovementRegisterForm container", () => {
     );
 
     const form = component.getByRole("form");
-    const conceptInput = component.getByLabelText("Concept");
-    const amountInput = component.getByLabelText("Amount");
-    const typeSelect = component.getByLabelText("Type");
+    const conceptInput = component.getByLabelText(/Concept/i);
+    const amountInput = component.getByLabelText(/Amount/i);
+    const typeSelect = component.getByLabelText(/Type/i);
+    const dateInput = component.getByLabelText(/Date/i);
 
     await act(async () => {
       fireEvent.change(conceptInput, {
@@ -55,6 +44,9 @@ describe("MovementRegisterForm container", () => {
       });
       fireEvent.change(typeSelect, {
         target: { value: movementCreateDto.type },
+      });
+      fireEvent.change(dateInput, {
+        target: { value: movementCreateDto.date },
       });
 
       fireEvent.submit(form);

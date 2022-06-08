@@ -6,6 +6,7 @@ import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest"
 import { useForm } from "src/modules/shared/hooks/useForm";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
 import { capitalize } from "src/modules/shared/utils/capitalize";
+import { getCurrentDateString } from "src/modules/shared/utils/getCurrentDateString";
 
 type MovementRegisterFormProps = {
   movementsRepository: MyRepository<MovementsRepository>;
@@ -23,7 +24,12 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
 
   const { formValues, names, ids, handleChange, handleSubmit } =
     useForm<MovementCreateDto>({
-      initialValues: { concept: "", amount: "", type: "" },
+      initialValues: {
+        concept: "",
+        amount: "",
+        type: "",
+        date: getCurrentDateString(),
+      },
       onSubmit: async (values, resetValues) => {
         await createMovement.execute({
           ...values,
@@ -38,7 +44,7 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
     <>
       <form onSubmit={handleSubmit} role="form">
         <div>
-          <label htmlFor={ids.concept}>{capitalize(names.concept)}</label>
+          <label htmlFor={ids.concept}>{capitalize(names.concept)}: </label>
           <input
             id={ids.concept}
             name={names.concept}
@@ -57,6 +63,18 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
             onChange={handleChange}
             type="number"
             value={formValues.amount}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor={ids.date}>{capitalize(names.date)}</label>
+          <input
+            id={ids.date}
+            name={names.date}
+            onChange={handleChange}
+            type="date"
+            value={formValues.date}
             required
           />
         </div>

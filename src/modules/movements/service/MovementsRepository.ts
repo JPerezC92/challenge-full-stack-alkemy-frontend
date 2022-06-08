@@ -1,7 +1,7 @@
+import { MovementCreateDto } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
+import { MovementType } from "src/modules/movements/models/MovementType";
 import { OrderType } from "src/modules/shared/models/OrderType";
-import { MovementCreateDto } from "../dto/MovementCreateDto";
-import { MovementType } from "../models/MovementType";
 
 export interface MovementsRepository {
   query(query: {

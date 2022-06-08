@@ -1,7 +1,8 @@
 import { MovementType } from "src/modules/movements/models/MovementType";
 
 export interface MovementCreateDto {
-  concept: string;
   amount: number;
+  concept: string;
+  date: string;
   type: MovementType;
 }
