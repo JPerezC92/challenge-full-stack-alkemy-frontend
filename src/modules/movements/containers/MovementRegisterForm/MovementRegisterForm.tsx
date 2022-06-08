@@ -1,4 +1,8 @@
 import React from "react";
+import {
+  MovementCreatedEventActionType,
+  useMovementCreatedEventState,
+} from "src/modules/movements/context/MovementCreatedEvent.context";
 import { MovementCreateDto } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
@@ -15,10 +19,17 @@ type MovementRegisterFormProps = {
 export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
   movementsRepository,
 }) => {
+  const { movementCreatedEventDispatch } = useMovementCreatedEventState();
+
   const createMovement = useCallableRequest(async ({ abortController }) => {
     const _movementsRepository = movementsRepository({ abortController });
     return async (movementCreateDto: MovementCreateDto) => {
       await _movementsRepository.create(movementCreateDto);
+
+      movementCreatedEventDispatch({
+        type: MovementCreatedEventActionType.MOVEMENT_CREATED,
+        payload: movementCreateDto.type,
+      });
     };
   }, []);
 

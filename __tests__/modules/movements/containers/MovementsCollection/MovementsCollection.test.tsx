@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MovementsCollection } from "src/modules/movements/containers/MovementsCollection";
+import { MovementCreatedEventProvider } from "src/modules/movements/context/MovementCreatedEvent.context";
 import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
@@ -35,7 +36,8 @@ describe("MovementsCollection container", () => {
       <MovementsCollection
         movementType={MovementType.INCOME}
         movementsRepository={useNodeMovementsRepository.useNodeMovementsRepository()}
-      />
+      />,
+      { wrapper: MovementCreatedEventProvider }
     );
 
     expect(await screen.findByText("concept 1")).toBeInTheDocument();

@@ -1,5 +1,6 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { MovementRegisterForm } from "src/modules/movements/containers/MovementRegisterForm";
+import { MovementCreatedEventProvider } from "src/modules/movements/context/MovementCreatedEvent.context";
 import { MovementCreateDto } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
@@ -26,7 +27,8 @@ describe("MovementRegisterForm container", () => {
     const component = render(
       <MovementRegisterForm
         movementsRepository={useNodeMovementsRepository.useNodeMovementsRepository()}
-      />
+      />,
+      { wrapper: MovementCreatedEventProvider }
     );
 
     const form = component.getByRole("form");

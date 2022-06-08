@@ -1,8 +1,13 @@
+import React from "react";
 import { MovementCard } from "src/modules/movements/components/MovementCard";
+import {
+  MovementCreatedEventActionType,
+  useMovementCreatedEventState,
+} from "src/modules/movements/context/MovementCreatedEvent.context";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import { useMovementListState } from "src/modules/movements/store/useMovementListState";
-import { useRequest } from "src/modules/shared/hooks/useRequest";
+import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { OrderType } from "src/modules/shared/models/OrderType";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
 
@@ -15,21 +20,42 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
   movementsRepository,
   movementType,
 }) => {
+  const { state, movementCreatedEventDispatch } =
+    useMovementCreatedEventState();
   const { movementList, movementListStore } = useMovementListState();
 
-  useRequest(
-    async ({ abortController }) => {
-      const _movementsRepository = movementsRepository({ abortController });
-      const _movementListStore = movementListStore();
+  const { execute } = useCallableRequest(async ({ abortController }) => {
+    const _movementsRepository = movementsRepository({ abortController });
+    const _movementListStore = movementListStore();
+    return async () => {
       const movementList = await _movementsRepository.query({
         movementType,
         order: OrderType.DESC,
       });
 
       _movementListStore.updateMovementList(movementList);
-    },
-    [movementListStore, movementType, movementsRepository]
-  );
+    };
+  }, []);
+
+  React.useEffect(() => {
+    execute();
+  }, [execute]);
+
+  React.useEffect(() => {
+    if (state.isMovementCreated && state.movementType === movementType) {
+      execute().then(() =>
+        movementCreatedEventDispatch({
+          type: MovementCreatedEventActionType.RESET_STATE,
+        })
+      );
+    }
+  }, [
+    execute,
+    movementCreatedEventDispatch,
+    movementType,
+    state.isMovementCreated,
+    state.movementType,
+  ]);
 
   return (
     <div>
