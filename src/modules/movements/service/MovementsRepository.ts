@@ -10,6 +10,10 @@ export interface MovementsRepository {
     page?: number;
   }): Promise<Movement[]>;
   create(movementCreate: Omit<Movement, "id">): Promise<void>;
-  findById(movementId: string): Promise<Movement | undefined>;
-  update(props: { movementId: string; movement: Movement }): Promise<void>;
+  findById(movementId: Movement["id"]): Promise<Movement | undefined>;
+  update(props: {
+    movementId: Movement["id"];
+    movement: Movement;
+  }): Promise<void>;
+  delete(movementId: Movement["id"]): Promise<void>;
 }

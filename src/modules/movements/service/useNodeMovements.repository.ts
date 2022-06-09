@@ -8,6 +8,7 @@ import { Movement } from "src/modules/movements/models/Movement";
 import { JsendStatus } from "src/modules/shared/service/JsendResponse";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
 import { BASE_API_URL } from "src/modules/shared/utils/constants";
+import { MovementsDeleteEndpoint } from "../dto/MovementsDeleteEndpoint";
 import { MovementsRepository } from "./MovementsRepository";
 
 export function useNodeMovementsRepository(): MyRepository<MovementsRepository> {
@@ -79,6 +80,19 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
         });
 
         const result = (await response.json()) as MovementsPutEndpoint;
+
+        if (result.status !== JsendStatus.success) {
+          console.log(result);
+        }
+      },
+
+      delete: async (movementId: Movement["id"]): Promise<void> => {
+        const response = await fetch(`${movementsApiUrl}/${movementId}`, {
+          method: "DELETE",
+          signal: abortController.signal,
+        });
+
+        const result = (await response.json()) as MovementsDeleteEndpoint;
 
         if (result.status !== JsendStatus.success) {
           console.log(result);

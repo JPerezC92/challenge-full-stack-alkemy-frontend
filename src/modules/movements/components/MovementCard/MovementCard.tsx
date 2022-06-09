@@ -3,6 +3,7 @@ import { MovementEditForm } from "src/modules/movements/containers/MovementEditF
 import { MovementView } from "src/modules/movements/dto/MovementView";
 import { useNodeMovementsRepository } from "src/modules/movements/service/useNodeMovements.repository";
 import { useMovementState } from "src/modules/movements/store/useMovementState";
+import { MovementDeleteButton } from "../../containers/MovementDeleteButton";
 
 type MovementCardProps = MovementView;
 
@@ -36,6 +37,11 @@ export const MovementCard: React.FC<MovementCardProps> = (movementView) => {
       <p>{amount}</p>
       <p>{concept}</p>
       <p>{type}</p>
+
+      <MovementDeleteButton
+        movementId={id}
+        movementsRepository={movementsRepository}
+      />
 
       <button type="button" onClick={toggleIsEditing}>
         Edit
