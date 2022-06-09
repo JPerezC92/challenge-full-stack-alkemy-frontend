@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MovementsCollection } from "src/modules/movements/containers/MovementsCollection";
-import { MovementCreatedEventProvider } from "src/modules/movements/context/MovementCreatedEvent.context";
+import { MovementEventProvider } from "src/modules/movements/context/MovementEventProvider.context";
 import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
@@ -19,10 +19,7 @@ const movementList: MovementEndpoint[] = Array.from({ length: 10 }).map(
 
 const movementsRepository: MovementsRepository = {
   query: jest.fn().mockResolvedValue(movementList),
-  create: jest.fn(),
-  update: jest.fn(),
-  findById: jest.fn(),
-};
+} as unknown as MovementsRepository;
 
 jest
   .spyOn(useNodeMovementsRepository, "useNodeMovementsRepository")
@@ -39,7 +36,7 @@ describe("MovementsCollection container", () => {
         movementType={MovementType.INCOME}
         movementsRepository={useNodeMovementsRepository.useNodeMovementsRepository()}
       />,
-      { wrapper: MovementCreatedEventProvider }
+      { wrapper: MovementEventProvider }
     );
 
     expect(await screen.findByText("concept 1")).toBeInTheDocument();

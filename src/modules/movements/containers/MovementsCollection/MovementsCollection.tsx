@@ -1,9 +1,9 @@
 import React from "react";
 import { MovementCard } from "src/modules/movements/components/MovementCard";
 import {
-  MovementCreatedEventActionType,
-  useMovementCreatedEventState,
-} from "src/modules/movements/context/MovementCreatedEvent.context";
+  MovementEventActionType,
+  useMovementEventState,
+} from "src/modules/movements/context/MovementEventProvider.context";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import { useMovementListState } from "src/modules/movements/store/useMovementListState";
@@ -20,8 +20,7 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
   movementsRepository,
   movementType,
 }) => {
-  const { state, movementCreatedEventDispatch } =
-    useMovementCreatedEventState();
+  const { state, movementEventDispatch } = useMovementEventState();
   const { movementList, movementListStore } = useMovementListState();
 
   const { execute } = useCallableRequest(async ({ abortController }) => {
@@ -44,14 +43,14 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
   React.useEffect(() => {
     if (state.isMovementCreated && state.movementType === movementType) {
       execute().then(() =>
-        movementCreatedEventDispatch({
-          type: MovementCreatedEventActionType.RESET_STATE,
+        movementEventDispatch({
+          type: MovementEventActionType.RESET_STATE,
         })
       );
     }
   }, [
     execute,
-    movementCreatedEventDispatch,
+    movementEventDispatch,
     movementType,
     state.isMovementCreated,
     state.movementType,

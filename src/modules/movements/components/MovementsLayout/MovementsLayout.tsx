@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { MovementRegisterForm } from "src/modules/movements/containers/MovementRegisterForm";
-import { MovementCreatedEventProvider } from "src/modules/movements/context/MovementCreatedEvent.context";
+import { MovementEventProvider } from "src/modules/movements/context/MovementEventProvider.context";
 import { useNodeMovementsRepository } from "src/modules/movements/service/useNodeMovements.repository";
 import { movementsRoutes } from "src/modules/shared/routes/web";
 
@@ -16,7 +16,7 @@ export const MovementsLayout: React.FC<MovementsLayoutProps> = ({
 
   return (
     <>
-      <MovementCreatedEventProvider>
+      <MovementEventProvider>
         <br />
         <MovementRegisterForm movementsRepository={movementsRepository} />
 
@@ -37,7 +37,7 @@ export const MovementsLayout: React.FC<MovementsLayoutProps> = ({
         <br />
 
         {children}
-      </MovementCreatedEventProvider>
+      </MovementEventProvider>
     </>
   );
 };

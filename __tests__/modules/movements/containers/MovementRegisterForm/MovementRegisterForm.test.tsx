@@ -1,6 +1,6 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { MovementRegisterForm } from "src/modules/movements/containers/MovementRegisterForm";
-import { MovementCreatedEventProvider } from "src/modules/movements/context/MovementCreatedEvent.context";
+import { MovementEventProvider } from "src/modules/movements/context/MovementEventProvider.context";
 import { MovementCreate } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
@@ -8,10 +8,7 @@ import * as useNodeMovementsRepository from "src/modules/movements/service/useNo
 
 const movementsRepository: MovementsRepository = {
   create: jest.fn(),
-  query: jest.fn(),
-  update: jest.fn(),
-  findById: jest.fn(),
-};
+} as unknown as MovementsRepository;
 
 jest
   .spyOn(useNodeMovementsRepository, "useNodeMovementsRepository")
@@ -30,7 +27,7 @@ describe("MovementRegisterForm container", () => {
       <MovementRegisterForm
         movementsRepository={useNodeMovementsRepository.useNodeMovementsRepository()}
       />,
-      { wrapper: MovementCreatedEventProvider }
+      { wrapper: MovementEventProvider }
     );
 
     const form = component.getByRole("form");
