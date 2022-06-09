@@ -3,7 +3,7 @@ import {
   MovementCreatedEventActionType,
   useMovementCreatedEventState,
 } from "src/modules/movements/context/MovementCreatedEvent.context";
-import { MovementCreateDto } from "src/modules/movements/dto/MovementCreateDto";
+import { MovementCreate } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
@@ -23,7 +23,7 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
 
   const createMovement = useCallableRequest(async ({ abortController }) => {
     const _movementsRepository = movementsRepository({ abortController });
-    return async (movementCreateDto: MovementCreateDto) => {
+    return async (movementCreateDto: MovementCreate) => {
       await _movementsRepository.create(movementCreateDto);
 
       movementCreatedEventDispatch({
@@ -34,7 +34,7 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
   }, []);
 
   const { formValues, names, ids, handleChange, handleSubmit } =
-    useForm<MovementCreateDto>({
+    useForm<MovementCreate>({
       initialValues: {
         concept: "",
         amount: "",

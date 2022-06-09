@@ -1,7 +1,7 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import { MovementRegisterForm } from "src/modules/movements/containers/MovementRegisterForm";
 import { MovementCreatedEventProvider } from "src/modules/movements/context/MovementCreatedEvent.context";
-import { MovementCreateDto } from "src/modules/movements/dto/MovementCreateDto";
+import { MovementCreate } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import * as useNodeMovementsRepository from "src/modules/movements/service/useNodeMovements.repository";
@@ -9,6 +9,8 @@ import * as useNodeMovementsRepository from "src/modules/movements/service/useNo
 const movementsRepository: MovementsRepository = {
   create: jest.fn(),
   query: jest.fn(),
+  update: jest.fn(),
+  findById: jest.fn(),
 };
 
 jest
@@ -17,7 +19,7 @@ jest
 
 describe("MovementRegisterForm container", () => {
   test("should call MovementsRepository.create with the correct parameters", async () => {
-    const movementCreateDto: MovementCreateDto = {
+    const movementCreate: MovementCreate = {
       amount: 1000,
       concept: "concept",
       type: MovementType.INCOME,
@@ -39,22 +41,22 @@ describe("MovementRegisterForm container", () => {
 
     await act(async () => {
       fireEvent.change(conceptInput, {
-        target: { value: movementCreateDto.concept },
+        target: { value: movementCreate.concept },
       });
       fireEvent.change(amountInput, {
-        target: { value: movementCreateDto.amount },
+        target: { value: movementCreate.amount },
       });
       fireEvent.change(typeSelect, {
-        target: { value: movementCreateDto.type },
+        target: { value: movementCreate.type },
       });
       fireEvent.change(dateInput, {
-        target: { value: movementCreateDto.date },
+        target: { value: movementCreate.date },
       });
 
       fireEvent.submit(form);
     });
 
     expect(movementsRepository.create).toHaveBeenCalledTimes(1);
-    expect(movementsRepository.create).toHaveBeenCalledWith(movementCreateDto);
+    expect(movementsRepository.create).toHaveBeenCalledWith(movementCreate);
   });
 });

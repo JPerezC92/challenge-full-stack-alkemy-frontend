@@ -1,7 +1,9 @@
 import React from "react";
 import { MovementEndpointToDomain } from "src/modules/movements/adapters/MovementEndpointToDomain";
 import { MovementsGetEndpoint } from "src/modules/movements/dto/MovementsGetEndpoint";
+import { MovementsIdGetEndpoint } from "src/modules/movements/dto/MovementsIdGetEndpoint";
 import { MovementsPostEndpoint } from "src/modules/movements/dto/MovementsPostEndpoint";
+import { MovementsPutEndpoint } from "src/modules/movements/dto/MovementsPutEndpoint";
 import { Movement } from "src/modules/movements/models/Movement";
 import { JsendStatus } from "src/modules/shared/service/JsendResponse";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
@@ -48,6 +50,38 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
 
         if (movementsPostEndpoint.status !== JsendStatus.success) {
           console.log({ movementsPostEndpoint });
+        }
+      },
+      findById: async (movementId): Promise<Movement | undefined> => {
+        const response = await fetch(`${movementsApiUrl}/${movementId}`, {
+          method: "GET",
+          signal: abortController.signal,
+        });
+
+        const movementGetEndpoint =
+          (await response.json()) as MovementsIdGetEndpoint;
+
+        return MovementEndpointToDomain(movementGetEndpoint.data);
+      },
+      update: async ({
+        movementId,
+        movement: movementUpdate,
+      }): Promise<void> => {
+        const response = await fetch(`${movementsApiUrl}/${movementId}`, {
+          body: JSON.stringify({
+            amount: movementUpdate.amount,
+            concept: movementUpdate.concept,
+            date: movementUpdate.date,
+          }),
+          headers: { "Content-Type": "application/json" },
+          method: "PUT",
+          signal: abortController.signal,
+        });
+
+        const result = (await response.json()) as MovementsPutEndpoint;
+
+        if (result.status !== JsendStatus.success) {
+          console.log(result);
         }
       },
     };

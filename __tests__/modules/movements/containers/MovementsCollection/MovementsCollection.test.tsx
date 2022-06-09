@@ -20,6 +20,8 @@ const movementList: MovementEndpoint[] = Array.from({ length: 10 }).map(
 const movementsRepository: MovementsRepository = {
   query: jest.fn().mockResolvedValue(movementList),
   create: jest.fn(),
+  update: jest.fn(),
+  findById: jest.fn(),
 };
 
 jest
