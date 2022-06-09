@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
+import { MovementView } from "src/modules/movements/dto/MovementView";
 
 import styles from "./MovementCard.module.scss";
 
-type MovementCardProps = MovementEndpoint;
+type MovementCardProps = MovementView;
 
 export const MovementCard: React.FC<MovementCardProps> = ({
   id,

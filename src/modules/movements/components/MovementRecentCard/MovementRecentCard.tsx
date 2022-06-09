@@ -1,9 +1,9 @@
 import React from "react";
-import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
+import { MovementView } from "src/modules/movements/dto/MovementView";
 
 import styles from "./MovementRecentCard.module.scss";
 
-type MovementRecentCardProps = MovementEndpoint;
+type MovementRecentCardProps = MovementView;
 
 export const MovementRecentCard: React.FC<MovementRecentCardProps> = ({
   amount,

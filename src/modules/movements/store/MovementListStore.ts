@@ -1,5 +1,5 @@
-import { MovementEndpoint } from "../dto/MovementEndpoint";
+import { Movement } from "src/modules/movements/models/Movement";
 
 export interface MovementListStore {
-  updateMovementList: (movements: MovementEndpoint[]) => void;
+  updateMovementList: (movements: Movement[]) => void;
 }

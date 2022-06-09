@@ -1,5 +1,5 @@
 import { MovementCreateDto } from "src/modules/movements/dto/MovementCreateDto";
-import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
+import { Movement } from "src/modules/movements/models/Movement";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { OrderType } from "src/modules/shared/models/OrderType";
 
@@ -9,6 +9,6 @@ export interface MovementsRepository {
     movementType?: MovementType;
     order?: OrderType;
     page?: number;
-  }): Promise<MovementEndpoint[]>;
-  create(movementCreateDto: MovementCreateDto): Promise<void>;
+  }): Promise<Movement[]>;
+  create(movementCreateDto: Omit<Movement, "id">): Promise<void>;
 }

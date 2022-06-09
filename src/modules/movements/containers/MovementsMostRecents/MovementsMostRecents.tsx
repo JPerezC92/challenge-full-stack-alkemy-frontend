@@ -1,10 +1,10 @@
 import React from "react";
+import { MovementRecentCard } from "src/modules/movements/components/MovementRecentCard";
+import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
+import { useMovementListState } from "src/modules/movements/store/useMovementListState";
 import { useRequest } from "src/modules/shared/hooks/useRequest";
 import { OrderType } from "src/modules/shared/models/OrderType";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
-import { MovementRecentCard } from "../../components/MovementRecentCard";
-import { MovementsRepository } from "../../service/MovementsRepository";
-import { useMovementListState } from "../../store/useMovementListState";
 
 type MovementsMostRecentsProps = {
   movementsRepository: MyRepository<MovementsRepository>;

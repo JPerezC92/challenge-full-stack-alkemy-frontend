@@ -1,10 +1,11 @@
 import React from "react";
+import { MovementEndpointToDomain } from "src/modules/movements/adapters/MovementEndpointToDomain";
+import { MovementsGetEndpoint } from "src/modules/movements/dto/MovementsGetEndpoint";
+import { MovementsPostEndpoint } from "src/modules/movements/dto/MovementsPostEndpoint";
+import { Movement } from "src/modules/movements/models/Movement";
 import { JsendStatus } from "src/modules/shared/service/JsendResponse";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
 import { BASE_API_URL } from "src/modules/shared/utils/constants";
-import { MovementEndpoint } from "../dto/MovementEndpoint";
-import { MovementsGetEndpoint } from "../dto/MovementsGetEndpoint";
-import { MovementsPostEndpoint } from "../dto/MovementsPostEndpoint";
 import { MovementsRepository } from "./MovementsRepository";
 
 export function useNodeMovementsRepository(): MyRepository<MovementsRepository> {
@@ -17,7 +18,7 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
         limit,
         order,
         movementType,
-      }): Promise<MovementEndpoint[]> => {
+      }): Promise<Movement[]> => {
         const searchParams = new URLSearchParams();
         if (page) searchParams.set("page", page.toString());
         if (limit) searchParams.set("limit", limit.toString());
@@ -32,11 +33,11 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
         const movementsGetEndpoint =
           (await response.json()) as MovementsGetEndpoint;
 
-        return movementsGetEndpoint.data;
+        return movementsGetEndpoint.data.map(MovementEndpointToDomain);
       },
-      create: async (movementCreateDto): Promise<void> => {
+      create: async (movementCreate): Promise<void> => {
         const response = await fetch(`${movementsApiUrl}`, {
-          body: JSON.stringify(movementCreateDto),
+          body: JSON.stringify(movementCreate),
           headers: { "Content-Type": "application/json" },
           method: "POST",
           signal: abortController.signal,

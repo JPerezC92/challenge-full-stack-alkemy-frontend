@@ -9,7 +9,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        1000
+        1000.00
       </p>
       <p>
         move
@@ -21,7 +21,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        2000
+        2000.00
       </p>
       <p>
         move
@@ -33,7 +33,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        3000
+        3000.00
       </p>
       <p>
         move
@@ -45,7 +45,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        4000
+        4000.00
       </p>
       <p>
         move
@@ -57,7 +57,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        5000
+        5000.00
       </p>
       <p>
         move
@@ -69,7 +69,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        6000
+        6000.00
       </p>
       <p>
         move
@@ -81,7 +81,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        7000
+        7000.00
       </p>
       <p>
         move
@@ -93,7 +93,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        8000
+        8000.00
       </p>
       <p>
         move
@@ -105,7 +105,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        9000
+        9000.00
       </p>
       <p>
         move
@@ -117,7 +117,7 @@ exports[`MovementsMostRecents container should match the snapshot 1`] = `
     <li>
       MovementRecentCard
       <p>
-        10000
+        10000.00
       </p>
       <p>
         move

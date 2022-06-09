@@ -1,7 +1,7 @@
 import { render, waitFor } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import { MovementsMostRecents } from "src/modules/movements/containers/MovementsMostRecents";
-import { MovementEndpoint } from "src/modules/movements/dto/MovementEndpoint";
+import { MovementView } from "src/modules/movements/dto/MovementView";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import * as useNodeMovementsRepository from "src/modules/movements/service/useNodeMovements.repository";
@@ -12,9 +12,9 @@ import { OrderType } from "src/modules/shared/models/OrderType";
 const movementList = Array(10)
   .fill("")
   .map(
-    (_, index): MovementEndpoint => ({
+    (_, index): MovementView => ({
       id: (index + 1).toString(),
-      amount: 1000 * (index + 1),
+      amount: (1000 * (index + 1)).toFixed(2),
       concept: "move",
       date: `2020-01-${index + 1}`,
       type: MovementType.EXPENSE,
