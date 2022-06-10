@@ -6,6 +6,8 @@ const movementsRepository: MovementsRepository = {
   delete: jest.fn(),
 } as unknown as MovementsRepository;
 
+const onDelete = jest.fn();
+
 const movementId = Date.now().toString();
 
 describe("MovementDeleteButton container", () => {
@@ -18,6 +20,7 @@ describe("MovementDeleteButton container", () => {
       <MovementDeleteButton
         movementId={movementId}
         movementsRepository={() => movementsRepository}
+        onDelete={onDelete}
       />
     );
 
@@ -29,6 +32,7 @@ describe("MovementDeleteButton container", () => {
       <MovementDeleteButton
         movementId={movementId}
         movementsRepository={() => movementsRepository}
+        onDelete={onDelete}
       />
     );
 
@@ -40,5 +44,7 @@ describe("MovementDeleteButton container", () => {
 
     expect(movementsRepository.delete).toHaveBeenCalledTimes(1);
     expect(movementsRepository.delete).toHaveBeenCalledWith(movementId);
+    expect(onDelete).toHaveBeenCalledTimes(1);
+    expect(onDelete).toHaveBeenCalledWith();
   });
 });

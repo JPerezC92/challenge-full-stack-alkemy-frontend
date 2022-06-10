@@ -25,6 +25,7 @@ export function useMovementEventState() {
 interface MovementEventState {
   movementType?: MovementType;
   isMovementCreated: boolean;
+  isMovementDeleted: boolean;
 }
 
 export const enum MovementEventActionType {
@@ -46,6 +47,7 @@ type MovementEventAction =
 
 const initialState: MovementEventState = {
   isMovementCreated: false,
+  isMovementDeleted: false,
   movementType: undefined,
 };
 
@@ -55,13 +57,25 @@ function reducer(
 ): MovementEventState {
   switch (action.type) {
     case MovementEventActionType.MOVEMENT_CREATED:
-      return { isMovementCreated: true, movementType: action.payload };
+      return {
+        ...state,
+        isMovementCreated: true,
+        movementType: action.payload,
+      };
 
     case MovementEventActionType.MOVEMENT_DELETED:
-      return { isMovementCreated: false, movementType: undefined };
+      return {
+        ...state,
+        isMovementDeleted: true,
+        movementType: action.payload,
+      };
 
     case MovementEventActionType.RESET_STATE:
-      return { isMovementCreated: false, movementType: undefined };
+      return {
+        isMovementCreated: false,
+        isMovementDeleted: false,
+        movementType: undefined,
+      };
 
     default:
       return state;

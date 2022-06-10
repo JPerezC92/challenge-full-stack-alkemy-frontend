@@ -22,6 +22,9 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
 }) => {
   const { state, movementEventDispatch } = useMovementEventState();
   const { movementList, movementListStore } = useMovementListState();
+  const canRerun =
+    (state.isMovementCreated || state.isMovementDeleted) &&
+    state.movementType === movementType;
 
   const { execute } = useCallableRequest(async ({ abortController }) => {
     const _movementsRepository = movementsRepository({ abortController });
@@ -41,20 +44,12 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
   }, [execute]);
 
   React.useEffect(() => {
-    if (state.isMovementCreated && state.movementType === movementType) {
+    if (canRerun) {
       execute().then(() =>
-        movementEventDispatch({
-          type: MovementEventActionType.RESET_STATE,
-        })
+        movementEventDispatch({ type: MovementEventActionType.RESET_STATE })
       );
     }
-  }, [
-    execute,
-    movementEventDispatch,
-    movementType,
-    state.isMovementCreated,
-    state.movementType,
-  ]);
+  }, [canRerun, execute, movementEventDispatch]);
 
   return (
     <div>
