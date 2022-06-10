@@ -10,6 +10,8 @@ const movementsRepository: MovementsRepository = {
   create: jest.fn(),
 } as unknown as MovementsRepository;
 
+const onCreate = jest.fn();
+
 jest
   .spyOn(useNodeMovementsRepository, "useNodeMovementsRepository")
   .mockReturnValue(() => movementsRepository);
@@ -26,6 +28,7 @@ describe("MovementRegisterForm container", () => {
     const component = render(
       <MovementRegisterForm
         movementsRepository={useNodeMovementsRepository.useNodeMovementsRepository()}
+        onCreate={onCreate}
       />,
       { wrapper: MovementEventProvider }
     );
@@ -55,5 +58,7 @@ describe("MovementRegisterForm container", () => {
 
     expect(movementsRepository.create).toHaveBeenCalledTimes(1);
     expect(movementsRepository.create).toHaveBeenCalledWith(movementCreate);
+    expect(onCreate).toHaveBeenCalledTimes(1);
+    expect(onCreate).toHaveBeenCalledWith(movementCreate.type);
   });
 });

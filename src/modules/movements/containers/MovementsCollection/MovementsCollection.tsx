@@ -22,34 +22,37 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
 }) => {
   const { state, movementEventDispatch } = useMovementEventState();
   const { movementList, movementListStore } = useMovementListState();
-  const canRerun =
+  const canUpdateMovements =
     (state.isMovementCreated || state.isMovementDeleted) &&
     state.movementType === movementType;
 
-  const { execute } = useCallableRequest(async ({ abortController }) => {
-    const _movementsRepository = movementsRepository({ abortController });
-    const _movementListStore = movementListStore();
-    return async () => {
-      const movementList = await _movementsRepository.query({
-        movementType,
-        order: OrderType.DESC,
-      });
+  const { execute: findMovements } = useCallableRequest(
+    async ({ abortController }) => {
+      const _movementsRepository = movementsRepository({ abortController });
+      const _movementListStore = movementListStore();
+      return async ({ movementType }: { movementType: MovementType }) => {
+        const movementList = await _movementsRepository.query({
+          movementType,
+          order: OrderType.DESC,
+        });
 
-      _movementListStore.updateMovementList(movementList);
-    };
-  }, []);
+        _movementListStore.updateMovementList(movementList);
+      };
+    },
+    []
+  );
 
   React.useEffect(() => {
-    execute();
-  }, [execute]);
+    findMovements({ movementType });
+  }, [findMovements, movementType]);
 
   React.useEffect(() => {
-    if (canRerun) {
-      execute().then(() =>
+    if (canUpdateMovements) {
+      findMovements({ movementType }).then(() =>
         movementEventDispatch({ type: MovementEventActionType.RESET_STATE })
       );
     }
-  }, [canRerun, execute, movementEventDispatch]);
+  }, [canUpdateMovements, findMovements, movementEventDispatch, movementType]);
 
   return (
     <div>

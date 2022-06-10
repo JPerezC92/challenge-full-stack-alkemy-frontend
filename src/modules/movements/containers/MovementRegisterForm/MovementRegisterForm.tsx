@@ -1,8 +1,4 @@
 import React from "react";
-import {
-  MovementEventActionType,
-  useMovementEventState,
-} from "src/modules/movements/context/MovementEventProvider.context";
 import { MovementCreate } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
@@ -14,22 +10,18 @@ import { getCurrentDateString } from "src/modules/shared/utils/getCurrentDateStr
 
 type MovementRegisterFormProps = {
   movementsRepository: MyRepository<MovementsRepository>;
+  onCreate?: (movementType: MovementType) => void;
 };
 
 export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
   movementsRepository,
+  onCreate,
 }) => {
-  const { movementEventDispatch } = useMovementEventState();
-
   const createMovement = useCallableRequest(async ({ abortController }) => {
     const _movementsRepository = movementsRepository({ abortController });
-    return async (movementCreateDto: MovementCreate) => {
-      await _movementsRepository.create(movementCreateDto);
-
-      movementEventDispatch({
-        type: MovementEventActionType.MOVEMENT_CREATED,
-        payload: movementCreateDto.type,
-      });
+    return async (movementCreate: MovementCreate) => {
+      await _movementsRepository.create(movementCreate);
+      onCreate?.(movementCreate.type);
     };
   }, []);
 
