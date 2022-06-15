@@ -1,4 +1,6 @@
 import React from "react";
+import { AuthenticationLayout } from "src/modules/auth/components/AuthenticationLayout";
+import { PrivateRoute } from "src/modules/auth/containers/PrivateRoute";
 import { MovementsLayout } from "src/modules/movements/components/MovementsLayout";
 import { MovementRegisterForm } from "src/modules/movements/containers/MovementRegisterForm";
 import { MovementsCollection } from "src/modules/movements/containers/MovementsCollection";
@@ -61,9 +63,11 @@ export default function OperationsPage(): React.ReactElement {
 OperationsPage.getLayout = function (page: React.ReactElement) {
   return (
     <>
-      <MainLayout>
-        <MovementsLayout>{page}</MovementsLayout>
-      </MainLayout>
+      <AuthenticationLayout Route={PrivateRoute}>
+        <MainLayout>
+          <MovementsLayout>{page}</MovementsLayout>
+        </MainLayout>
+      </AuthenticationLayout>
     </>
   );
 };

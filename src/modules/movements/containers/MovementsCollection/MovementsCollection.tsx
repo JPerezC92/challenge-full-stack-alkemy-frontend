@@ -39,7 +39,7 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
         _movementListStore.updateMovementList(movementList);
       };
     },
-    []
+    [movementListStore, movementsRepository]
   );
 
   React.useEffect(() => {

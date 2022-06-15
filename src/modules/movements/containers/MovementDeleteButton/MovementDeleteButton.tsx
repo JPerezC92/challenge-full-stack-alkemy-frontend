@@ -15,14 +15,17 @@ export const MovementDeleteButton: React.FC<MovementDeleteButtonProps> = ({
   movementsRepository,
   onDelete,
 }) => {
-  const deleteMovement = useCallableRequest(async ({ abortController }) => {
-    const _movementsRepository = movementsRepository({ abortController });
+  const deleteMovement = useCallableRequest(
+    async ({ abortController }) => {
+      const _movementsRepository = movementsRepository({ abortController });
 
-    return async ({ movementId }: { movementId: Movement["id"] }) => {
-      await _movementsRepository.delete(movementId);
-      onDelete?.();
-    };
-  }, []);
+      return async ({ movementId }: { movementId: Movement["id"] }) => {
+        await _movementsRepository.delete(movementId);
+        onDelete?.();
+      };
+    },
+    [movementsRepository, onDelete]
+  );
 
   return (
     <>

@@ -17,13 +17,16 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
   movementsRepository,
   onCreate,
 }) => {
-  const createMovement = useCallableRequest(async ({ abortController }) => {
-    const _movementsRepository = movementsRepository({ abortController });
-    return async (movementCreate: MovementCreate) => {
-      await _movementsRepository.create(movementCreate);
-      onCreate?.(movementCreate.type);
-    };
-  }, []);
+  const createMovement = useCallableRequest(
+    async ({ abortController }) => {
+      const _movementsRepository = movementsRepository({ abortController });
+      return async (movementCreate: MovementCreate) => {
+        await _movementsRepository.create(movementCreate);
+        onCreate?.(movementCreate.type);
+      };
+    },
+    [movementsRepository, onCreate]
+  );
 
   const { formValues, names, ids, handleChange, handleSubmit } =
     useForm<MovementCreate>({
