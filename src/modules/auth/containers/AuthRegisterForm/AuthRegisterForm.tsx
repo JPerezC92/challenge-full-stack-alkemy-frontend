@@ -1,5 +1,5 @@
 import React from "react";
-import { UserCreate } from "src/modules/auth/dto/UserCreate";
+import { UserRegister } from "src/modules/auth/dto/UserRegister";
 import { AccessCredentials } from "src/modules/auth/models/AccessCredentials";
 import { AuthRepository } from "src/modules/auth/service/AuthRepository";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
@@ -20,7 +20,7 @@ export const AuthRegisterForm: React.FC<AuthRegisterFormProps> = ({
     async ({ abortController }) => {
       const _authRepository = authRepository({ abortController });
 
-      return async (userCreate: UserCreate) => {
+      return async (userCreate: UserRegister) => {
         const result = await _authRepository.register(userCreate);
 
         if (!result) return;
@@ -32,7 +32,7 @@ export const AuthRegisterForm: React.FC<AuthRegisterFormProps> = ({
   );
 
   const { formValues, ids, names, handleChange, handleSubmit } =
-    useForm<UserCreate>({
+    useForm<UserRegister>({
       initialValues: { firstName: "", lastName: "", email: "", password: "" },
       onSubmit: async (values) => {
         await resgisterUser(values);

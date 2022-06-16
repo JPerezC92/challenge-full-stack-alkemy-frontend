@@ -1,6 +1,8 @@
-import { UserCreate } from "src/modules/auth/dto/UserCreate";
+import { UserRegister } from "src/modules/auth/dto/UserRegister";
 import { AccessCredentials } from "src/modules/auth/models/AccessCredentials";
+import { UserLogin } from "../dto/UserLogin";
 
 export interface AuthRepository {
-  register: (userCreate: UserCreate) => Promise<AccessCredentials | void>;
+  register: (userCreate: UserRegister) => Promise<AccessCredentials | void>;
+  login: (userLogin: UserLogin) => Promise<AccessCredentials | void>;
 }

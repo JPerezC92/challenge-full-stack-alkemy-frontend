@@ -1,11 +1,11 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { AuthRegisterForm } from "src/modules/auth/containers/AuthRegisterForm";
-import { UserCreate } from "src/modules/auth/dto/UserCreate";
+import { UserRegister } from "src/modules/auth/dto/UserRegister";
 import { AccessCredentials } from "src/modules/auth/models/AccessCredentials";
 import { User } from "src/modules/auth/models/User";
 import { AuthRepository } from "src/modules/auth/service/AuthRepository";
 
-const userCreate: UserCreate = {
+const userCreate: UserRegister = {
   email: "test@example.com",
   password: "123478554jhbjsda76",
   firstName: "John",
@@ -33,7 +33,7 @@ describe("AuthRegisterForm container", () => {
     jest.clearAllMocks();
   });
 
-  test("should render the login form", () => {
+  test("should render the register form", () => {
     render(<AuthRegisterForm authRepository={() => authRepository} />);
 
     expect(screen.getByRole("form")).toBeInTheDocument();

@@ -1,4 +1,4 @@
-export interface UserCreate {
+export interface UserRegister {
   firstName: string;
   lastName: string;
   email: string;
