@@ -21,7 +21,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
   toggleIsEditing,
   ...movementView
 }) => {
-  const updateMovement = useCallableRequest(
+  const [updateMovement] = useCallableRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
       const _movementStore = movementStore();
@@ -51,7 +51,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
         type: movementView.type,
       },
       onSubmit: async (values) => {
-        await updateMovement.execute({
+        await updateMovement({
           ...values,
           id: movementView.id,
           type: movementView.type,

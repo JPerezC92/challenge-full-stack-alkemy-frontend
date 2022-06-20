@@ -1,5 +1,6 @@
 import React from "react";
 import { AuthLoginPostEndpoint } from "src/modules/auth/dto/AuthLoginPostEndpoint";
+import { AuthRefreshTokenGetEndpoint } from "src/modules/auth/dto/AuthRefreshTokenGetEndpoint";
 import { AuthRegisterPostEndpoint } from "src/modules/auth/dto/AuthRegisterPostEndpoint";
 import { UserEndpointToDomain } from "src/modules/auth/mappers/UserEndpointToDomain";
 import { AccessCredentials } from "src/modules/auth/models/AccessCredentials";
@@ -44,6 +45,27 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
         });
 
         const result = (await response.json()) as AuthLoginPostEndpoint;
+
+        if (result.status !== JsendStatus.success) return;
+
+        const { accessToken, refreshToken, user } = result.data;
+
+        refreshTokenCookieRepository.save(refreshToken);
+
+        return { accessToken, user: UserEndpointToDomain(user) };
+      },
+
+      refreshToken: async (): Promise<AccessCredentials | void> => {
+        const response = await fetch(`${authApiUrl}/refresh-token`, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-refresh-token": `Bearer ${refreshTokenCookieRepository.get()}`,
+          },
+          method: RequestMethod.GET,
+          signal: abortController.signal,
+        });
+
+        const result = (await response.json()) as AuthRefreshTokenGetEndpoint;
 
         if (result.status !== JsendStatus.success) return;
 

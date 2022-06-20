@@ -5,4 +5,5 @@ import { UserLogin } from "../dto/UserLogin";
 export interface AuthRepository {
   register: (userCreate: UserRegister) => Promise<AccessCredentials | void>;
   login: (userLogin: UserLogin) => Promise<AccessCredentials | void>;
+  refreshToken: () => Promise<AccessCredentials | void>;
 }

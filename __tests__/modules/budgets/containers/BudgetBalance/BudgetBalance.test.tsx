@@ -1,8 +1,7 @@
-import { render, renderHook, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import { BudgetBalance } from "src/modules/budgets/containers/BudgetBalance";
 import { BudgetsRepository } from "src/modules/budgets/service/BudgetsRepository";
-import * as useNodeBudgetsRepository from "src/modules/budgets/service/useNodeBudgets.repository";
 import { BudgetBalanceStore } from "src/modules/budgets/store/BudgetBalanceStore";
 import * as useBudgetBalanceState from "src/modules/budgets/store/useBalanceState";
 
@@ -17,32 +16,30 @@ const budgetsRepository: BudgetsRepository = {
 };
 
 jest
-  .spyOn(useNodeBudgetsRepository, "useNodeBudgetsRepository")
-  .mockReturnValue(jest.fn().mockReturnValue(budgetsRepository));
-
-jest.spyOn(useBudgetBalanceState, "useBudgetBalanceState").mockReturnValue({
-  balance,
-  budgetBalanceStore: () => budgetBalanceStore,
-});
+  .spyOn(useBudgetBalanceState, "useBudgetBalanceState")
+  .mockImplementation(() => ({
+    balance,
+    budgetBalanceStore: () => budgetBalanceStore,
+  }));
 
 describe("BudgetBalance component", () => {
-  test("should call getBalance and updateBalance", async () => {
-    const budgetBalanceState = renderHook(() =>
-      useBudgetBalanceState.useBudgetBalanceState()
-    );
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    const component = render(
+  test("should call getBalance and updateBalance", async () => {
+    const budgetBalanceState = useBudgetBalanceState.useBudgetBalanceState();
+
+    render(
       <BudgetBalance
-        balance={budgetBalanceState.result.current.balance}
-        budgetBalanceStore={
-          budgetBalanceState.result.current.budgetBalanceStore
-        }
-        budgetsRepository={useNodeBudgetsRepository.useNodeBudgetsRepository()}
+        balance={budgetBalanceState.balance}
+        budgetBalanceStore={budgetBalanceState.budgetBalanceStore}
+        budgetsRepository={() => budgetsRepository}
       />
     );
 
     await waitFor(async () => {
-      expect(await component.findByText(/100/i)).toBeInTheDocument();
+      expect(await screen.findByText(/1000/i)).toBeInTheDocument();
     });
 
     expect(budgetsRepository.getBalance).toHaveBeenCalledTimes(1);
@@ -51,18 +48,14 @@ describe("BudgetBalance component", () => {
   });
 
   test("should match the snapshot", async () => {
-    const budgetBalanceState = renderHook(() =>
-      useBudgetBalanceState.useBudgetBalanceState()
-    );
+    const budgetBalanceState = useBudgetBalanceState.useBudgetBalanceState();
 
     const component = renderer
       .create(
         <BudgetBalance
-          balance={budgetBalanceState.result.current.balance}
-          budgetBalanceStore={
-            budgetBalanceState.result.current.budgetBalanceStore
-          }
-          budgetsRepository={useNodeBudgetsRepository.useNodeBudgetsRepository()}
+          balance={budgetBalanceState.balance}
+          budgetBalanceStore={budgetBalanceState.budgetBalanceStore}
+          budgetsRepository={() => budgetsRepository}
         />
       )
       .toJSON();

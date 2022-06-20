@@ -4,16 +4,14 @@ import { useLoading } from "./useLoading";
 
 export const useRequest = (
   fn: (props: { abortController: AbortController }) => Promise<void>,
-  deps: unknown[] | undefined = []
+  deps: React.DependencyList
 ) => {
-  const { isLoading, finishLoading, startLoading } = useLoading();
+  const { isLoading, finishLoading, startLoading } = useLoading(true);
   const abortControllerRef = React.useRef<AbortController>();
 
   React.useEffect(() => {
     abortControllerRef.current?.abort();
-
     const abortController = new AbortController();
-
     abortControllerRef.current = abortController;
 
     (async () => {
@@ -31,13 +29,12 @@ export const useRequest = (
         if ((error as DOMException).code !== DOMException.ABORT_ERR) {
           throw error;
         }
+      } finally {
+        finishLoading();
       }
     })();
 
-    return () => {
-      finishLoading();
-      abortController.abort();
-    };
+    return () => abortController.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finishLoading, startLoading, ...deps]);
 

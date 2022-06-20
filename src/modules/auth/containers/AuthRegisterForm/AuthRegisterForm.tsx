@@ -16,7 +16,7 @@ export const AuthRegisterForm: React.FC<AuthRegisterFormProps> = ({
   authRepository,
   onSuccess,
 }) => {
-  const { execute: resgisterUser } = useCallableRequest(
+  const [resgisterUser] = useCallableRequest(
     async ({ abortController }) => {
       const _authRepository = authRepository({ abortController });
 

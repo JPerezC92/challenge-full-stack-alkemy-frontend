@@ -15,7 +15,7 @@ export const MovementDeleteButton: React.FC<MovementDeleteButtonProps> = ({
   movementsRepository,
   onDelete,
 }) => {
-  const deleteMovement = useCallableRequest(
+  const [deleteMovement] = useCallableRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
 
@@ -29,10 +29,7 @@ export const MovementDeleteButton: React.FC<MovementDeleteButtonProps> = ({
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => deleteMovement.execute({ movementId })}
-      >
+      <button type="button" onClick={() => deleteMovement({ movementId })}>
         Delete
       </button>
     </>

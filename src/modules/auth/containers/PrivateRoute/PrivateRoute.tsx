@@ -12,8 +12,9 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   user,
   accessToken,
 }) => {
-  if (!isAuthenticated || !user)
-    return <Redirect to={mainRoutes.login} replace />;
+  if (!isAuthenticated || !user) {
+    return <Redirect to={mainRoutes.login} replace={true} />;
+  }
 
   return (
     <>

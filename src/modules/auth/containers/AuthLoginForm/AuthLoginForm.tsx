@@ -16,7 +16,7 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
   authRepository,
   onSuccess,
 }) => {
-  const { execute: loginUser } = useCallableRequest(
+  const [loginUser] = useCallableRequest(
     async ({ abortController }) => {
       const _authRepository = authRepository({ abortController });
 
@@ -64,7 +64,7 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
             id={ids.password}
             name={names.password}
             onChange={handleChange}
-            type="text"
+            type="password"
             value={formValues.password}
           />
         </div>

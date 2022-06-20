@@ -17,5 +17,9 @@ export const Redirect: React.FC<RedirectProps> = ({ to, replace }) => {
     if (!replace) router.push(to);
   }, [to, router, replace]);
 
-  return null;
+  return (
+    <span role="alert" aria-busy="true">
+      ...Loading
+    </span>
+  );
 };

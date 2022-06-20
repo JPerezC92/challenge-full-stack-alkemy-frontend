@@ -1,7 +1,7 @@
 import React from "react";
+import { AuthenticationState } from "src/modules/auth/components/AuthenticationLayout/state/authenticationReducer";
 import { Redirect } from "src/modules/shared/components/Redirect";
 import { mainRoutes } from "src/modules/shared/routes/web";
-import { AuthenticationState } from "../../components/AuthenticationLayout/state/authenticationReducer";
 
 type PublicRouteProps = { children: React.ReactNode } & Pick<
   AuthenticationState,

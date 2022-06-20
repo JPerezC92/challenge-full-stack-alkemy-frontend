@@ -17,7 +17,7 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
   movementsRepository,
   onCreate,
 }) => {
-  const createMovement = useCallableRequest(
+  const [createMovement] = useCallableRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
       return async (movementCreate: MovementCreate) => {
@@ -37,7 +37,7 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
         date: getCurrentDateString(),
       },
       onSubmit: async (values, resetValues) => {
-        await createMovement.execute({
+        await createMovement({
           ...values,
           amount: Number(values.amount),
           type: values.type as MovementType,

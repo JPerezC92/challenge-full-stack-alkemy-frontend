@@ -26,7 +26,7 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
     (state.isMovementCreated || state.isMovementDeleted) &&
     state.movementType === movementType;
 
-  const { execute: findMovements } = useCallableRequest(
+  const [findMovements] = useCallableRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
       const _movementListStore = movementListStore();
