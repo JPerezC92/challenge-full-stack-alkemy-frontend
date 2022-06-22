@@ -3,17 +3,15 @@ import { AuthenticationLayout } from "src/modules/auth/components/Authentication
 import { PrivateRoute } from "src/modules/auth/containers/PrivateRoute";
 import { BudgetBalance } from "src/modules/budgets/containers/BudgetBalance";
 import { useNodeBudgetsRepository } from "src/modules/budgets/service/useNodeBudgets.repository";
-import { useBudgetBalanceState } from "src/modules/budgets/store/useBalanceState";
 import { MovementsMostRecents } from "src/modules/movements/containers/MovementsMostRecents";
 import { useNodeMovementsRepository } from "src/modules/movements/service/useNodeMovements.repository";
 import { MainLayout } from "src/modules/shared/components/MainLayout";
 import styles from "styles/Home.module.css";
 
 export default function HomePage() {
-  const { balance, budgetBalanceStore } = useBudgetBalanceState();
   const budgetsRepository = useNodeBudgetsRepository();
-
   const movementsRepository = useNodeMovementsRepository();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -23,11 +21,7 @@ export default function HomePage() {
       </Head>
 
       <main className={styles.main}>
-        <BudgetBalance
-          balance={balance}
-          budgetsRepository={budgetsRepository}
-          budgetBalanceStore={budgetBalanceStore}
-        />
+        <BudgetBalance budgetsRepository={budgetsRepository} />
 
         <MovementsMostRecents movementsRepository={movementsRepository} />
       </main>
