@@ -1,9 +1,9 @@
 import React from "react";
 
-export const useCallableRequest = <Input = unknown | undefined>(
+export const useCallableRequest = <Input = unknown>(
   fn: (props: {
     abortController: AbortController;
-  }) => Promise<(input: Input) => Promise<void>>,
+  }) => Promise<(input?: Input) => Promise<void>>,
   deps: unknown[] | undefined = []
 ) => {
   const abortControllerRef = React.useRef<AbortController>();

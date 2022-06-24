@@ -35,23 +35,26 @@ export function AuthenticationLayout({
     async ({ abortController }) => {
       const _authRepository = authRepository({ abortController });
 
-      const accessCredentials = await _authRepository.refreshToken();
-
       return async () => {
-        startLoading();
-        if (
-          !accessCredentials ||
-          !isDefined(accessCredentials.user) ||
-          !isDefined(accessCredentials.accessToken)
-        ) {
-          return finishLoading();
-        }
+        try {
+          startLoading();
+          const accessCredentials = await _authRepository.refreshToken();
 
-        authenticationDispatch({
-          type: AuthenticationActionType.Login,
-          payload: { ...accessCredentials },
-        });
-        finishLoading();
+          if (
+            !accessCredentials ||
+            !isDefined(accessCredentials.user) ||
+            !isDefined(accessCredentials.accessToken)
+          ) {
+            return;
+          }
+
+          authenticationDispatch({
+            type: AuthenticationActionType.Login,
+            payload: { ...accessCredentials },
+          });
+        } finally {
+          finishLoading();
+        }
       };
     },
     [authRepository, finishLoading, startLoading]

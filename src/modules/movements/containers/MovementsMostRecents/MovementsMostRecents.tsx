@@ -25,6 +25,8 @@ export const MovementsMostRecents: React.FC<MovementsMostRecentsProps> = ({
         order: OrderType.DESC,
       });
 
+      if (!movementList) return;
+
       _movementsListStore.updateMovementList(movementList);
     },
     [movementListStore, movementsRepository]

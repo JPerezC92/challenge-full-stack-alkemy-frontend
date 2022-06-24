@@ -1,5 +1,7 @@
 import React from "react";
+import { useCredentialsState } from "src/modules/auth/containers/PrivateRoute/CredentialsProvider.context";
 import { MovementEndpointToDomain } from "src/modules/movements/adapters/MovementEndpointToDomain";
+import { MovementsDeleteEndpoint } from "src/modules/movements/dto/MovementsDeleteEndpoint";
 import { MovementsGetEndpoint } from "src/modules/movements/dto/MovementsGetEndpoint";
 import { MovementsIdGetEndpoint } from "src/modules/movements/dto/MovementsIdGetEndpoint";
 import { MovementsPostEndpoint } from "src/modules/movements/dto/MovementsPostEndpoint";
@@ -8,96 +10,117 @@ import { Movement } from "src/modules/movements/models/Movement";
 import { JsendStatus } from "src/modules/shared/service/JsendResponse";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
 import { BASE_API_URL } from "src/modules/shared/utils/constants";
-import { MovementsDeleteEndpoint } from "../dto/MovementsDeleteEndpoint";
+import { formatBearerToken } from "src/modules/shared/utils/formatBearerToken";
 import { MovementsRepository } from "./MovementsRepository";
 
 export function useNodeMovementsRepository(): MyRepository<MovementsRepository> {
-  return React.useCallback(({ abortController }) => {
-    const movementsApiUrl = `${BASE_API_URL}/movements`;
+  const { accessToken } = useCredentialsState();
 
-    return {
-      query: async ({
-        page,
-        limit,
-        order,
-        movementType,
-      }): Promise<Movement[]> => {
-        const searchParams = new URLSearchParams();
-        if (page) searchParams.set("page", page.toString());
-        if (limit) searchParams.set("limit", limit.toString());
-        if (order) searchParams.set("order", order);
-        if (movementType) searchParams.set("movement-type", movementType);
+  return React.useCallback(
+    ({ abortController }) => {
+      const movementsApiUrl = `${BASE_API_URL}/movements`;
 
-        const response = await fetch(
-          `${movementsApiUrl}/?${searchParams.toString()}`,
-          { method: "GET", signal: abortController.signal }
-        );
+      return {
+        query: async ({
+          page,
+          limit,
+          order,
+          movementType,
+        }): Promise<Movement[] | void> => {
+          const searchParams = new URLSearchParams();
+          if (page) searchParams.set("page", page.toString());
+          if (limit) searchParams.set("limit", limit.toString());
+          if (order) searchParams.set("order", order);
+          if (movementType) searchParams.set("movement-type", movementType);
 
-        const movementsGetEndpoint =
-          (await response.json()) as MovementsGetEndpoint;
+          const response = await fetch(
+            `${movementsApiUrl}/?${searchParams.toString()}`,
+            {
+              method: "GET",
+              signal: abortController.signal,
+              headers: { Authorization: formatBearerToken(accessToken) },
+            }
+          );
 
-        return movementsGetEndpoint.data.map(MovementEndpointToDomain);
-      },
-      create: async (movementCreate): Promise<void> => {
-        const response = await fetch(`${movementsApiUrl}`, {
-          body: JSON.stringify(movementCreate),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-          signal: abortController.signal,
-        });
+          const movementsGetEndpoint =
+            (await response.json()) as MovementsGetEndpoint;
 
-        const movementsPostEndpoint =
-          (await response.json()) as MovementsPostEndpoint;
+          if (movementsGetEndpoint.status !== JsendStatus.success) {
+            return console.log(movementsGetEndpoint);
+          }
 
-        if (movementsPostEndpoint.status !== JsendStatus.success) {
-          console.log({ movementsPostEndpoint });
-        }
-      },
-      findById: async (movementId): Promise<Movement | undefined> => {
-        const response = await fetch(`${movementsApiUrl}/${movementId}`, {
-          method: "GET",
-          signal: abortController.signal,
-        });
+          return movementsGetEndpoint.data.map(MovementEndpointToDomain);
+        },
+        create: async (movementCreate): Promise<void> => {
+          const response = await fetch(`${movementsApiUrl}`, {
+            body: JSON.stringify(movementCreate),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: formatBearerToken(accessToken),
+            },
+            method: "POST",
+            signal: abortController.signal,
+          });
 
-        const movementGetEndpoint =
-          (await response.json()) as MovementsIdGetEndpoint;
+          const movementsPostEndpoint =
+            (await response.json()) as MovementsPostEndpoint;
 
-        return MovementEndpointToDomain(movementGetEndpoint.data);
-      },
-      update: async ({
-        movementId,
-        movement: movementUpdate,
-      }): Promise<void> => {
-        const response = await fetch(`${movementsApiUrl}/${movementId}`, {
-          body: JSON.stringify({
-            amount: movementUpdate.amount,
-            concept: movementUpdate.concept,
-            date: movementUpdate.date,
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "PUT",
-          signal: abortController.signal,
-        });
+          if (movementsPostEndpoint.status !== JsendStatus.success) {
+            console.log({ movementsPostEndpoint });
+          }
+        },
+        findById: async (movementId): Promise<Movement | undefined> => {
+          const response = await fetch(`${movementsApiUrl}/${movementId}`, {
+            method: "GET",
+            signal: abortController.signal,
+            headers: { Authorization: formatBearerToken(accessToken) },
+          });
 
-        const result = (await response.json()) as MovementsPutEndpoint;
+          const movementGetEndpoint =
+            (await response.json()) as MovementsIdGetEndpoint;
 
-        if (result.status !== JsendStatus.success) {
-          console.log(result);
-        }
-      },
+          return MovementEndpointToDomain(movementGetEndpoint.data);
+        },
+        update: async ({
+          movementId,
+          movement: movementUpdate,
+        }): Promise<void> => {
+          const response = await fetch(`${movementsApiUrl}/${movementId}`, {
+            body: JSON.stringify({
+              amount: movementUpdate.amount,
+              concept: movementUpdate.concept,
+              date: movementUpdate.date,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: formatBearerToken(accessToken),
+            },
+            method: "PUT",
+            signal: abortController.signal,
+          });
 
-      delete: async (movementId: Movement["id"]): Promise<void> => {
-        const response = await fetch(`${movementsApiUrl}/${movementId}`, {
-          method: "DELETE",
-          signal: abortController.signal,
-        });
+          const result = (await response.json()) as MovementsPutEndpoint;
 
-        const result = (await response.json()) as MovementsDeleteEndpoint;
+          if (result.status !== JsendStatus.success) {
+            console.log(result);
+          }
+        },
 
-        if (result.status !== JsendStatus.success) {
-          console.log(result);
-        }
-      },
-    };
-  }, []);
+        delete: async (movementId: Movement["id"]): Promise<void> => {
+          const response = await fetch(`${movementsApiUrl}/${movementId}`, {
+            method: "DELETE",
+            signal: abortController.signal,
+            headers: { Authorization: formatBearerToken(accessToken) },
+          });
+
+          const result = (await response.json()) as MovementsDeleteEndpoint;
+
+          if (result.status !== JsendStatus.success) {
+            console.log(result);
+          }
+        },
+      };
+    },
+    [accessToken]
+  );
 }

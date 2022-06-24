@@ -8,6 +8,7 @@ import { JsendStatus } from "src/modules/shared/service/JsendResponse";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
 import { RequestMethod } from "src/modules/shared/service/RequestMethod";
 import { BASE_API_URL } from "src/modules/shared/utils/constants";
+import { formatBearerToken } from "src/modules/shared/utils/formatBearerToken";
 import { AuthRepository } from "./AuthRepository";
 import { RefreshTokenCookieRepository } from "./RefreshTokenCookie.repository";
 
@@ -54,12 +55,13 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
 
         return { accessToken, user: UserEndpointToDomain(user) };
       },
-
       refreshToken: async (): Promise<AccessCredentials | void> => {
         const response = await fetch(`${authApiUrl}/refresh-token`, {
           headers: {
             "Content-Type": "application/json",
-            "x-refresh-token": `Bearer ${refreshTokenCookieRepository.get()}`,
+            "x-refresh-token": formatBearerToken(
+              refreshTokenCookieRepository.get()
+            ),
           },
           method: RequestMethod.GET,
           signal: abortController.signal,
