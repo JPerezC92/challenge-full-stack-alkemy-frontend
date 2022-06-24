@@ -20,14 +20,14 @@ export const MovementsMostRecents: React.FC<MovementsMostRecentsProps> = ({
       const _movementsRepository = movementsRepository({ abortController });
       const _movementsListStore = movementListStore();
 
-      const movementList = await _movementsRepository.query({
+      const result = await _movementsRepository.query({
         limit: 10,
         order: OrderType.DESC,
       });
 
-      if (!movementList) return;
+      if (!result) return;
 
-      _movementsListStore.updateMovementList(movementList);
+      _movementsListStore.updateMovementList(result.movementList);
     },
     [movementListStore, movementsRepository]
   );

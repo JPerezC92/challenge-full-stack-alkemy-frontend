@@ -8,7 +8,7 @@ export interface MovementsRepository {
     movementType?: MovementType;
     order?: OrderType;
     page?: number;
-  }): Promise<Movement[] | void>;
+  }): Promise<{ movementList: Movement[]; pages: number } | void>;
   create(movementCreate: Omit<Movement, "id">): Promise<void>;
   findById(movementId: Movement["id"]): Promise<Movement | undefined>;
   update(props: {

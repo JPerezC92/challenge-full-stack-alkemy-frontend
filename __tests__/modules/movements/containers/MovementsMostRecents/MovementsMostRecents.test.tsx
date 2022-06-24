@@ -27,9 +27,10 @@ const movementListStore: MovementListStore = {
 
 const movementsRepository: MovementsRepository = {
   create: jest.fn(),
-  query: jest.fn().mockResolvedValue(movementList),
+  query: jest.fn().mockResolvedValue({ movementList, pages: 1 }),
   findById: jest.fn(),
   update: jest.fn(),
+  delete: jest.fn(),
 };
 
 jest.spyOn(useMovementListState, "useMovementListState").mockReturnValue({

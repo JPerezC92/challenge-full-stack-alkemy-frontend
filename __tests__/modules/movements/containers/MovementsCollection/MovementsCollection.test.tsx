@@ -18,7 +18,7 @@ const movementList: MovementEndpoint[] = Array.from({ length: 10 }).map(
 );
 
 const movementsRepository: MovementsRepository = {
-  query: jest.fn().mockResolvedValue(movementList),
+  query: jest.fn().mockResolvedValue({ movementList, pages: 1 }),
 } as unknown as MovementsRepository;
 
 jest
@@ -46,6 +46,8 @@ describe("MovementsCollection container", () => {
     expect(movementsRepository.query).toHaveBeenCalledWith({
       movementType: MovementType.INCOME,
       order: OrderType.DESC,
+      limit: 10,
+      page: 1,
     });
   });
 });

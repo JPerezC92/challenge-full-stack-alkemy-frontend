@@ -26,7 +26,7 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
           limit,
           order,
           movementType,
-        }): Promise<Movement[] | void> => {
+        }): Promise<{ movementList: Movement[]; pages: number } | void> => {
           const searchParams = new URLSearchParams();
           if (page) searchParams.set("page", page.toString());
           if (limit) searchParams.set("limit", limit.toString());
@@ -49,7 +49,12 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
             return console.log(movementsGetEndpoint);
           }
 
-          return movementsGetEndpoint.data.map(MovementEndpointToDomain);
+          return {
+            movementList: movementsGetEndpoint.data.movementList.map(
+              MovementEndpointToDomain
+            ),
+            pages: movementsGetEndpoint.data.pages,
+          };
         },
         create: async (movementCreate): Promise<void> => {
           const response = await fetch(`${movementsApiUrl}`, {

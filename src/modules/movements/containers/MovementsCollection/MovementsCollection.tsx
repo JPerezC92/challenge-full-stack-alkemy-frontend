@@ -4,6 +4,7 @@ import {
   MovementEventActionType,
   useMovementEventState,
 } from "src/modules/movements/context/MovementEventProvider.context";
+import { usePagination } from "src/modules/movements/hooks/usePagination";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import { useMovementListState } from "src/modules/movements/store/useMovementListState";
@@ -22,6 +23,9 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
 }) => {
   const { state, movementEventDispatch } = useMovementEventState();
   const { movementList, movementListStore } = useMovementListState();
+
+  const { currentPage, pages, updatePagesCount, updatePage } = usePagination();
+
   const canUpdateMovements =
     (state.isMovementCreated || state.isMovementDeleted) &&
     state.movementType === movementType;
@@ -31,15 +35,20 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
       const _movementsRepository = movementsRepository({ abortController });
       const _movementListStore = movementListStore();
       return async ({ movementType }: { movementType: MovementType }) => {
-        const movementList = await _movementsRepository.query({
+        const result = await _movementsRepository.query({
           movementType,
           order: OrderType.DESC,
+          limit: 10,
+          page: currentPage,
         });
 
-        _movementListStore.updateMovementList(movementList);
+        if (!result) return;
+
+        _movementListStore.updateMovementList(result.movementList);
+        updatePagesCount(result.pages);
       };
     },
-    [movementListStore, movementsRepository]
+    [currentPage, movementListStore, movementsRepository, updatePagesCount]
   );
 
   React.useEffect(() => {
@@ -56,6 +65,16 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
 
   return (
     <div>
+      {pages.map((page) => (
+        <button
+          type="button"
+          key={page}
+          onClick={() => updatePage(page)}
+          disabled={page === currentPage}
+        >
+          {page}
+        </button>
+      ))}
       {movementList.map((movement) => (
         <MovementCard key={movement.id} {...movement} />
       ))}
