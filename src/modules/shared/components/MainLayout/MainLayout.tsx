@@ -1,30 +1,96 @@
 import Link from "next/link";
 import React from "react";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { HiMenu } from "react-icons/hi";
+import { useAuthenticationState } from "src/modules/auth/components/AuthenticationLayout/AuthenticationProvider.context";
+import { AuthenticationActionType } from "src/modules/auth/components/AuthenticationLayout/state/authenticationAction";
 import { mainRoutes } from "src/modules/shared/routes/web";
 
 const navList = [
   { name: "Home", route: mainRoutes.home },
-  { name: "ABM de operaciones", route: mainRoutes.movements },
+  { name: "Operations", route: mainRoutes.movements },
 ] as const;
 
 type MainLayoutProps = {
   children?: React.ReactNode;
 };
 
+function useToggle() {
+  const [isActive, setIsActive] = React.useState(false);
+
+  const toggle = React.useCallback(() => setIsActive((s) => !s), []);
+
+  return [isActive, toggle] as const;
+}
+
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const { authenticationDispatch } = useAuthenticationState();
+  const [isActive, toggle] = useToggle();
+
   return (
     <>
-      <nav className="flex justify-center gap-5  border-b-2 py-4">
-        {navList.map((route) => (
-          <Link key={route.route} href={route.route}>
-            <a className="rounded-md bg-emerald-300/60 px-3 text-lg font-semibold hover:bg-emerald-300">
-              {route.name}
-            </a>
-          </Link>
-        ))}
-      </nav>
+      <div className="m-auto max-w-screen-lg">
+        <header className="rounded-b-md bg-indigo-600 drop-shadow-sm">
+          <div className="flex items-center justify-between p-3 text-white">
+            <i className="text-2xl">
+              <FaRegMoneyBillAlt />
+            </i>
 
-      <>{children}</>
+            <nav className="hidden sm:block">
+              {navList.map((route) => (
+                <Link key={route.route} href={route.route}>
+                  <a className="rounded-md px-3 py-2 text-base font-semibold hover:bg-black/10">
+                    {route.name}
+                  </a>
+                </Link>
+              ))}
+            </nav>
+
+            <button
+              type="button"
+              onClick={toggle}
+              className="rounded-md p-1 text-2xl transition-colors ease-in-out hover:bg-slate-700 hover:text-white sm:hidden"
+            >
+              <i>
+                <HiMenu />
+              </i>
+            </button>
+
+            <button
+              type="button"
+              className="rounded-md border border-cyan-400 px-2 py-1 transition-colors ease-in-out hover:bg-black/30"
+              onClick={() =>
+                authenticationDispatch({
+                  type: AuthenticationActionType.Logout,
+                })
+              }
+            >
+              Logout
+            </button>
+          </div>
+
+          <nav
+            className={`${
+              isActive ? "flex" : "hidden"
+            } flex-col gap-1 p-2 sm:hidden `}
+          >
+            {navList.map((route) => (
+              <Link key={route.route} href={route.route}>
+                <a
+                  className="rounded-md px-3 py-2 text-base font-semibold text-white transition-colors ease-in-out hover:bg-black/30"
+                  onClick={toggle}
+                >
+                  {route.name}
+                </a>
+              </Link>
+            ))}
+          </nav>
+        </header>
+
+        <div className="p-4">
+          <>{children}</>
+        </div>
+      </div>
     </>
   );
 };

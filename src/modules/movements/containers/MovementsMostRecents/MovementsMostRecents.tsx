@@ -33,14 +33,18 @@ export const MovementsMostRecents: React.FC<MovementsMostRecentsProps> = ({
   );
 
   return (
-    <div>
-      <h2>Recent movements</h2>
+    <section className="rounded-md bg-gradient-to-b from-indigo-100 to-indigo-50 p-4">
+      <h2 className="mb-4 text-lg font-bold">Recent movements</h2>
 
-      <ol>
+      <ol className="grid grid-cols-12 gap-4">
         {movementList.map((movement) => (
-          <MovementRecentCard key={movement.id} {...movement} />
+          <MovementRecentCard
+            key={movement.id}
+            {...movement}
+            className="col-span-12 sm:col-span-4 md:col-span-3"
+          />
         ))}
       </ol>
-    </div>
+    </section>
   );
 };

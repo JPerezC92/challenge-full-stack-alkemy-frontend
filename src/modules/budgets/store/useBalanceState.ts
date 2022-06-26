@@ -16,5 +16,5 @@ export const useBudgetBalanceState = () => {
     []
   );
 
-  return { balance, budgetBalanceStore };
+  return { balance: balance.toFixed(2), budgetBalanceStore };
 };

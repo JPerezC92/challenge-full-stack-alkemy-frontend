@@ -1,8 +1,8 @@
 import React from "react";
 import { BudgetsRepository } from "src/modules/budgets/service/BudgetsRepository";
+import { useBudgetBalanceState } from "src/modules/budgets/store/useBalanceState";
 import { useRequest } from "src/modules/shared/hooks/useRequest";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
-import { useBudgetBalanceState } from "../../store/useBalanceState";
 
 type BudgetBalanceProps = {
   budgetsRepository: MyRepository<BudgetsRepository>;
@@ -28,7 +28,9 @@ export const BudgetBalance: React.FC<BudgetBalanceProps> = ({
 
   return (
     <>
-      <h1>Current balance: {balance}</h1>
+      <h1 className="text-right text-lg font-medium italic">
+        Current balance: <b>${balance}</b>
+      </h1>
     </>
   );
 };
