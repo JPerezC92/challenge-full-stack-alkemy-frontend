@@ -25,18 +25,20 @@ export default function RegisterPage(): React.ReactElement {
   );
 
   return (
-    <>
-      <h1>Register</h1>
-
+    <main className="m-auto flex min-h-screen max-w-md flex-col justify-center px-2">
       <AuthRegisterForm
         authRepository={authRepository}
         onSuccess={onRegisterSuccess}
       />
 
+      <hr className="my-4" />
+
       <Link href={mainRoutes.login}>
-        <a>Login</a>
+        <a className="rounded border border-orange-500/50 p-2 text-center font-bold hover:bg-orange-500/5">
+          Login
+        </a>
       </Link>
-    </>
+    </main>
   );
 }
 

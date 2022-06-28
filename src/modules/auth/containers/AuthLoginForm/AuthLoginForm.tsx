@@ -48,8 +48,9 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
   return (
     <>
       <form
-        onSubmit={handleSubmit}
         className="flex flex-col gap-4 rounded border border-teal-500/50 bg-yellow-500/5 p-4 shadow-md"
+        onSubmit={handleSubmit}
+        role="form"
       >
         <h1 className="center text-center text-xl font-bold">Login</h1>
 

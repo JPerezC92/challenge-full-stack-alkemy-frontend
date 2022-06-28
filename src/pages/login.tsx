@@ -24,7 +24,7 @@ export default function LoginPage(): React.ReactElement {
   );
 
   return (
-    <main className="m-auto flex min-h-screen max-w-md flex-col justify-center">
+    <main className="m-auto flex min-h-screen max-w-md flex-col justify-center px-2">
       <AuthLoginForm
         authRepository={authRepository}
         onSuccess={handleOnSuccess}
