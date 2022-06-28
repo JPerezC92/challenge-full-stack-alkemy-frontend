@@ -2,6 +2,9 @@ import React from "react";
 import { UserLogin } from "src/modules/auth/dto/UserLogin";
 import { AccessCredentials } from "src/modules/auth/models/AccessCredentials";
 import { AuthRepository } from "src/modules/auth/service/AuthRepository";
+import { Button } from "src/modules/shared/components/Button";
+import { Input } from "src/modules/shared/components/Input";
+import { Label } from "src/modules/shared/components/Label";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { useForm } from "src/modules/shared/hooks/useForm";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
@@ -44,12 +47,15 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
 
   return (
     <>
-      <h1>Login</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 rounded border border-teal-500/50 bg-yellow-500/5 p-4 shadow-md"
+      >
+        <h1 className="center text-center text-xl font-bold">Login</h1>
 
-      <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor={ids.email}>{capitalize(names.email)}</label>
-          <input
+          <Label htmlFor={ids.email}>{capitalize(names.email)}</Label>
+          <Input
             id={ids.email}
             name={names.email}
             onChange={handleChange}
@@ -59,8 +65,8 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
         </div>
 
         <div>
-          <label htmlFor={ids.password}>{capitalize(names.password)}</label>
-          <input
+          <Label htmlFor={ids.password}>{capitalize(names.password)}</Label>
+          <Input
             id={ids.password}
             name={names.password}
             onChange={handleChange}
@@ -69,7 +75,9 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
           />
         </div>
 
-        <button type="submit">Login</button>
+        <Button primary type="submit" className="w-full">
+          Submit
+        </Button>
       </form>
     </>
   );

@@ -13,7 +13,7 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <select
       {...props}
-      className={`w-full rounded border p-1 transition ease-in-out focus:outline-indigo-400 ${className}`}
+      className={`w-full rounded border p-1 transition ease-in-out focus:outline-teal-700/50 ${className}`}
     >
       {children}
     </select>
