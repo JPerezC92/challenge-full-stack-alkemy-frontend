@@ -1,131 +1,307 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MovementsMostRecents container should match the snapshot 1`] = `
-<div>
-  <h2>
+<section
+  className="rounded-md bg-gradient-to-b from-indigo-100 to-indigo-50 p-4"
+>
+  <h2
+    className="mb-4 text-lg font-bold"
+  >
     Recent movements
   </h2>
-  <ol>
-    <li>
-      MovementRecentCard
-      <p>
-        1000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+  <ol
+    className="grid grid-cols-12 gap-4"
+  >
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-1
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            1000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        2000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-2
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            2000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        3000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-3
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            3000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        4000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-4
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            4000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        5000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-5
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            5000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        6000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-6
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            6000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        7000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-7
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            7000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        8000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-8
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            8000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        9000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-9
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            9000.00
+          </b>
+        </span>
+      </div>
     </li>
-    <li>
-      MovementRecentCard
-      <p>
-        10000.00
-      </p>
-      <p>
-        move
-      </p>
-      <p>
-        expense
-      </p>
+    <li
+      className="flex min-w-max flex-col gap-1 rounded-sm border border-cyan-500/30 p-3 col-span-12 sm:col-span-4"
+    >
+      <header>
+        <span
+          className="text-lg font-bold capitalize"
+        >
+          move
+        </span>
+      </header>
+      <div
+        className=" flex items-center justify-between gap-4 text-right text-lg"
+      >
+        <span
+          className="min-w-max text-sm font-semibold italic text-gray-400"
+        >
+          2020-01-10
+        </span>
+        <span
+          className="text-orange-600 min-w-max"
+        >
+          <b>
+            -
+             $
+            10000.00
+          </b>
+        </span>
+      </div>
     </li>
   </ol>
-</div>
+</section>
 `;

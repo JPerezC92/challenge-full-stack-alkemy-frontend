@@ -5,7 +5,7 @@ import { BudgetsRepository } from "src/modules/budgets/service/BudgetsRepository
 import { BudgetBalanceStore } from "src/modules/budgets/store/BudgetBalanceStore";
 import * as useBudgetBalanceState from "src/modules/budgets/store/useBalanceState";
 
-const balance = 1000;
+const balance = (1000).toFixed(2);
 
 const budgetBalanceStore: BudgetBalanceStore = {
   updateBalance: jest.fn(),
@@ -28,15 +28,7 @@ describe("BudgetBalance component", () => {
   });
 
   test("should call getBalance and updateBalance", async () => {
-    const budgetBalanceState = useBudgetBalanceState.useBudgetBalanceState();
-
-    render(
-      <BudgetBalance
-        balance={budgetBalanceState.balance}
-        budgetBalanceStore={budgetBalanceState.budgetBalanceStore}
-        budgetsRepository={() => budgetsRepository}
-      />
-    );
+    render(<BudgetBalance budgetsRepository={() => budgetsRepository} />);
 
     await waitFor(async () => {
       expect(await screen.findByText(/1000/i)).toBeInTheDocument();
@@ -48,16 +40,8 @@ describe("BudgetBalance component", () => {
   });
 
   test("should match the snapshot", async () => {
-    const budgetBalanceState = useBudgetBalanceState.useBudgetBalanceState();
-
     const component = renderer
-      .create(
-        <BudgetBalance
-          balance={budgetBalanceState.balance}
-          budgetBalanceStore={budgetBalanceState.budgetBalanceStore}
-          budgetsRepository={() => budgetsRepository}
-        />
-      )
+      .create(<BudgetBalance budgetsRepository={() => budgetsRepository} />)
       .toJSON();
 
     expect(component).toMatchSnapshot();

@@ -1,4 +1,5 @@
 import React from "react";
+import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import { MovementDeleteButton } from "src/modules/movements/containers/MovementDeleteButton";
 import { MovementEditForm } from "src/modules/movements/containers/MovementEditForm";
 import {
@@ -9,16 +10,19 @@ import { MovementView } from "src/modules/movements/dto/MovementView";
 import { useNodeMovementsRepository } from "src/modules/movements/service/useNodeMovements.repository";
 import { useMovementState } from "src/modules/movements/store/useMovementState";
 
-type MovementCardProps = MovementView;
+type MovementCardProps = { className?: string } & MovementView;
 
-export const MovementCard: React.FC<MovementCardProps> = (movementView) => {
+export const MovementCard: React.FC<MovementCardProps> = ({
+  className,
+  ...movementView
+}) => {
   const { movementEventDispatch } = useMovementEventState();
   const movementsRepository = useNodeMovementsRepository();
 
   const { movement, movementStore } = useMovementState(movementView);
   const [isEditing, setIsEditing] = React.useState(false);
   const _movementView = movement || movementView;
-  const { id, amount, concept, type } = _movementView;
+  const { id, amount, concept, date } = _movementView;
 
   const toggleIsEditing = React.useCallback(
     () => setIsEditing((state) => !state),
@@ -35,6 +39,7 @@ export const MovementCard: React.FC<MovementCardProps> = (movementView) => {
   if (isEditing) {
     return (
       <MovementEditForm
+        className={`rounded border border-cyan-500/30 p-2 ${className}`}
         movementsRepository={movementsRepository}
         movementStore={movementStore}
         toggleIsEditing={toggleIsEditing}
@@ -44,21 +49,42 @@ export const MovementCard: React.FC<MovementCardProps> = (movementView) => {
   }
 
   return (
-    <article>
-      <p>{id}</p>
-      <p>{amount}</p>
-      <p>{concept}</p>
-      <p>{type}</p>
+    <article
+      className={`flex flex-col gap-4 rounded border border-cyan-500/30 p-2 ${className}`}
+    >
+      <header className="flex">
+        <h3 className="font-bold">{concept}</h3>
 
-      <MovementDeleteButton
-        movementId={id}
-        movementsRepository={movementsRepository}
-        onDelete={handleOnDelete}
-      />
+        <div className="ml-auto grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            className="rounded border border-blue-500/50 p-1 hover:bg-blue-500/50"
+            onClick={toggleIsEditing}
+          >
+            <MdOutlineEdit />
+          </button>
 
-      <button type="button" onClick={toggleIsEditing}>
-        Edit
-      </button>
+          <MovementDeleteButton
+            className="rounded border border-orange-500/50 p-1 hover:bg-orange-300/50"
+            movementId={id}
+            movementsRepository={movementsRepository}
+            onDelete={handleOnDelete}
+          >
+            <i>
+              <MdDeleteOutline />
+            </i>
+          </MovementDeleteButton>
+        </div>
+      </header>
+
+      <div className="flex items-center text-lg">
+        <span className="min-w-max text-sm font-semibold italic text-gray-400">
+          {date}
+        </span>
+        <span className="ml-auto">
+          <b>${amount}</b>
+        </span>
+      </div>
     </article>
   );
 };

@@ -27,6 +27,7 @@ const movementsRepository: MovementsRepository = {
   findById: jest.fn().mockResolvedValue(movementUpdated),
   query: jest.fn(),
   update: jest.fn(),
+  delete: jest.fn(),
 };
 
 const movementStore: MovementStore = {

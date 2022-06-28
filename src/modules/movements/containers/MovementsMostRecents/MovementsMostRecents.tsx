@@ -41,7 +41,7 @@ export const MovementsMostRecents: React.FC<MovementsMostRecentsProps> = ({
           <MovementRecentCard
             key={movement.id}
             {...movement}
-            className="col-span-12 sm:col-span-4 md:col-span-3"
+            className="col-span-12 sm:col-span-4"
           />
         ))}
       </ol>
