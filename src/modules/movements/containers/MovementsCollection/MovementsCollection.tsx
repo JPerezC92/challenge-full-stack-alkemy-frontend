@@ -8,6 +8,7 @@ import { usePagination } from "src/modules/movements/hooks/usePagination";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import { useMovementListState } from "src/modules/movements/store/useMovementListState";
+import { Button } from "src/modules/shared/components/Button";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { OrderType } from "src/modules/shared/models/OrderType";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
@@ -67,17 +68,17 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
     <div>
       <div className="mb-4 flex space-x-2">
         {pages.map((page) => (
-          <button
-            type="button"
-            className={`rounded border border-emerald-400/50 px-2 transition ease-in-out hover:bg-emerald-400/20 ${
-              page === currentPage ? "bg-emerald-400/20" : "bg-white"
-            }`}
+          <Button
             key={page}
+            type="button"
+            primary
+            className="min-w-[1.8rem] p-0 px-2"
+            outline={page !== currentPage}
             onClick={() => updatePage(page)}
             disabled={page === currentPage}
           >
             {page}
-          </button>
+          </Button>
         ))}
       </div>
 

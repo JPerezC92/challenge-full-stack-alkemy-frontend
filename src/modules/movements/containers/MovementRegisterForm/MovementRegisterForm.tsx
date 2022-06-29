@@ -2,6 +2,7 @@ import React from "react";
 import { MovementCreate } from "src/modules/movements/dto/MovementCreateDto";
 import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
+import { Button } from "src/modules/shared/components/Button";
 import { Input } from "src/modules/shared/components/Input";
 import { Label } from "src/modules/shared/components/Label";
 import { Select } from "src/modules/shared/components/Select";
@@ -118,20 +119,23 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-2">
-          <button
+          <Button
             type="button"
-            className="rounded border border-orange-500 p-2 font-medium transition ease-in-out"
+            secondary
+            outline
+            // className="rounded border border-orange-500 p-2 font-medium transition ease-in-out"
             onClick={resetValues}
           >
             Clear
-          </button>
+          </Button>
 
-          <button
+          <Button
             type="submit"
-            className="rounded bg-teal-400/50 p-2 font-medium transition ease-in-out hover:bg-teal-400"
+            primary
+            // className="rounded bg-teal-400/50 p-2 font-medium transition ease-in-out hover:bg-teal-400"
           >
             Save
-          </button>
+          </Button>
         </div>
       </form>
     </>

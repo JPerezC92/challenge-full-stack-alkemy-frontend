@@ -30,16 +30,16 @@ export const Button: React.FC<ButtonProps> = ({
 
   const outlineColor =
     primary && outline
-      ? "border-teal-400/50 hover:border-teal-400"
+      ? "border border-teal-400/50 hover:border-teal-400 hover:bg-teal-500/5"
       : secondary && outline
-      ? "border-orange-500/50 hover:border-orange-500"
+      ? "border border-orange-500/50 hover:border-orange-500 hover:bg-orange-500/5"
       : tertiary && outline
-      ? "border border-cyan-400/50 hover:border-cyan-400"
+      ? "border border-cyan-400/50 hover:border-cyan-400 hover:bg-cyan-500/5"
       : "";
 
   return (
     <button
-      className={`rounded p-2 font-medium transition-all ease-in-out hover:shadow-md disabled:border-gray-400 disabled:opacity-75 ${background} ${outlineColor} ${className}`}
+      className={`rounded p-2 font-medium transition-all ease-in-out hover:shadow-md disabled:pointer-events-none disabled:border-gray-400 disabled:opacity-75 ${background} ${outlineColor} ${className}`}
       {...props}
     >
       {children}

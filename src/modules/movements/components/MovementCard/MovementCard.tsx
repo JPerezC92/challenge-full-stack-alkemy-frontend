@@ -9,6 +9,7 @@ import {
 import { MovementView } from "src/modules/movements/dto/MovementView";
 import { useNodeMovementsRepository } from "src/modules/movements/service/useNodeMovements.repository";
 import { useMovementState } from "src/modules/movements/store/useMovementState";
+import { Button } from "src/modules/shared/components/Button";
 
 type MovementCardProps = { className?: string } & MovementView;
 
@@ -56,16 +57,18 @@ export const MovementCard: React.FC<MovementCardProps> = ({
         <h3 className="font-bold">{concept}</h3>
 
         <div className="ml-auto grid grid-cols-2 gap-3">
-          <button
+          <Button
             type="button"
-            className="rounded border border-blue-500/50 p-1 hover:bg-blue-500/50"
+            primary
+            outline
+            className="p-1"
             onClick={toggleIsEditing}
           >
             <MdOutlineEdit />
-          </button>
+          </Button>
 
           <MovementDeleteButton
-            className="rounded border border-orange-500/50 p-1 hover:bg-orange-300/50"
+            className="p-1"
             movementId={id}
             movementsRepository={movementsRepository}
             onDelete={handleOnDelete}

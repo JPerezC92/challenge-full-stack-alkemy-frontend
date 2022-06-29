@@ -3,6 +3,7 @@ import { MovementView } from "src/modules/movements/dto/MovementView";
 import { Movement } from "src/modules/movements/models/Movement";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 import { MovementStore } from "src/modules/movements/store/MovementStore";
+import { Button } from "src/modules/shared/components/Button";
 import { Input } from "src/modules/shared/components/Input";
 import { Label } from "src/modules/shared/components/Label";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
@@ -118,20 +119,19 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
         </div>
 
         <div className="mt-2 grid grid-cols-2 gap-2 font-semibold">
-          <button
+          <Button
             type="button"
+            secondary
+            outline
             onClick={toggleIsEditing}
-            className="rounded border border-orange-500 hover:bg-orange-500/30"
+            className="p-1"
           >
             Cancel
-          </button>
+          </Button>
 
-          <button
-            type="submit"
-            className="rounded border bg-teal-500/50 hover:bg-teal-500/80"
-          >
+          <Button primary type="submit" className="p-1">
             Save
-          </button>
+          </Button>
         </div>
       </form>
     </>
