@@ -4,7 +4,11 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import { useAuthenticationState } from "src/modules/auth/components/AuthenticationLayout/AuthenticationProvider.context";
 import { AuthenticationActionType } from "src/modules/auth/components/AuthenticationLayout/state/authenticationAction";
+import { AuthLogoutButton } from "src/modules/auth/containers/AuthLogoutButton";
+import { useCredentialsState } from "src/modules/auth/containers/PrivateRoute/CredentialsProvider.context";
+import { useNodeAuthRepository } from "src/modules/auth/service/useNodeAuth.repository";
 import { mainRoutes } from "src/modules/shared/routes/web";
+import { useToggle } from "../../hooks/useToggle";
 
 const navList = [
   { name: "Home", route: mainRoutes.home },
@@ -15,17 +19,17 @@ type MainLayoutProps = {
   children?: React.ReactNode;
 };
 
-function useToggle() {
-  const [isActive, setIsActive] = React.useState(false);
-
-  const toggle = React.useCallback(() => setIsActive((s) => !s), []);
-
-  return [isActive, toggle] as const;
-}
-
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { authenticationDispatch } = useAuthenticationState();
+  const { accessToken } = useCredentialsState();
+  const authRepository = useNodeAuthRepository();
   const [isActive, toggle] = useToggle();
+
+  const handleLogout = () => {
+    authenticationDispatch({
+      type: AuthenticationActionType.Logout,
+    });
+  };
 
   return (
     <>
@@ -56,17 +60,13 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </i>
             </button>
 
-            <button
-              type="button"
-              className="rounded-md border border-cyan-400 px-2 py-1 transition-colors ease-in-out hover:bg-black/30"
-              onClick={() =>
-                authenticationDispatch({
-                  type: AuthenticationActionType.Logout,
-                })
-              }
+            <AuthLogoutButton
+              authRepository={authRepository}
+              accessToken={accessToken}
+              onClick={handleLogout}
             >
               Logout
-            </button>
+            </AuthLogoutButton>
           </div>
 
           <nav

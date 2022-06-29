@@ -9,6 +9,7 @@ import { MyRepository } from "src/modules/shared/service/MyRepository";
 import { RequestMethod } from "src/modules/shared/service/RequestMethod";
 import { BASE_API_URL } from "src/modules/shared/utils/constants";
 import { formatBearerToken } from "src/modules/shared/utils/formatBearerToken";
+import { AuthLogoutTokenGetEndpoint } from "../dto/AuthLogoutTokenGetEndpoint";
 import { AuthRepository } from "./AuthRepository";
 import { RefreshTokenCookieRepository } from "./RefreshTokenCookie.repository";
 
@@ -55,6 +56,23 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
 
         return { accessToken, user: UserEndpointToDomain(user) };
       },
+
+      logout: async ({ accessToken }) => {
+        const response = await fetch(`${authApiUrl}/logout`, {
+          headers: { Authorization: formatBearerToken(accessToken) },
+          signal: abortController.signal,
+          method: RequestMethod.GET,
+        });
+
+        const result = (await response.json()) as AuthLogoutTokenGetEndpoint;
+
+        if (result.status !== JsendStatus.success) return;
+
+        refreshTokenCookieRepository.remove();
+
+        return true;
+      },
+
       refreshToken: async (): Promise<AccessCredentials | void> => {
         const response = await fetch(`${authApiUrl}/refresh-token`, {
           headers: {

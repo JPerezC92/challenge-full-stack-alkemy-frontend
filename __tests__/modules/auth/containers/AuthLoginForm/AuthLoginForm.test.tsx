@@ -33,7 +33,7 @@ describe("AuthLoginForm container", () => {
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(screen.getByRole("button")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toHaveTextContent("Login");
+    expect(screen.getByRole("button")).toHaveTextContent(/submit/i);
   });
 
   test("should call login method when form is submitted", async () => {

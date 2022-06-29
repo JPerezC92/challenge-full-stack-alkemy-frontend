@@ -42,7 +42,7 @@ describe("AuthRegisterForm container", () => {
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(screen.getByRole("button")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toHaveTextContent(/register/i);
+    expect(screen.getByRole("button")).toHaveTextContent(/submit/i);
   });
 
   test("should call AuthRepository.register and onSuccess with the correct parameters", async () => {
@@ -74,7 +74,6 @@ describe("AuthRegisterForm container", () => {
       fireEvent.click(submitButton);
     });
 
-    expect(true).toBe(true);
     expect(authRepository.register).toHaveBeenCalledTimes(1);
     expect(authRepository.register).toHaveBeenCalledWith(userCreate);
     expect(onSuccess).toHaveBeenCalledTimes(1);

@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 
 export function RefreshTokenCookieRepository() {
-  const cookieName = "refreshToken";
+  const cookieName = "refresh-token";
   return {
     save: (refreshToken: string): void => {
       Cookies.set(cookieName, refreshToken, {
@@ -12,5 +12,6 @@ export function RefreshTokenCookieRepository() {
       });
     },
     get: (): string => Cookies.get(cookieName) || "",
+    remove: (): void => Cookies.remove(cookieName),
   };
 }
