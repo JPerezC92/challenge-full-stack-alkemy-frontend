@@ -1,4 +1,10 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  prettyDOM,
+  render,
+  screen,
+} from "@testing-library/react";
 import { AuthRegisterForm } from "src/modules/auth/containers/AuthRegisterForm";
 import { UserRegister } from "src/modules/auth/dto/UserRegister";
 import { AccessCredentials } from "src/modules/auth/models/AccessCredentials";
@@ -7,9 +13,10 @@ import { AuthRepository } from "src/modules/auth/service/AuthRepository";
 
 const userCreate: UserRegister = {
   email: "test@example.com",
-  password: "123478554jhbjsda76",
+  password: "1234546789aA",
   firstName: "John",
   lastName: "Doe",
+  confirmPassword: "1234546789aA",
 };
 
 const accessCredentials: AccessCredentials = {
@@ -40,7 +47,8 @@ describe("AuthRegisterForm container", () => {
     expect(screen.getByLabelText(/first name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/last name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByTestId("password")).toBeInTheDocument();
+    expect(screen.getByTestId("confirm-password")).toBeInTheDocument();
     expect(screen.getByRole("button")).toBeInTheDocument();
     expect(screen.getByRole("button")).toHaveTextContent(/submit/i);
   });
@@ -56,7 +64,8 @@ describe("AuthRegisterForm container", () => {
     const firstNameInput = screen.getByLabelText(/first name/i);
     const lastNameInput = screen.getByLabelText(/last name/i);
     const emailInput = screen.getByLabelText(/email/i);
-    const passwordInput = screen.getByLabelText(/password/i);
+    const passwordInput = screen.getByTestId("password");
+    const confirmPasswordInput = screen.getByTestId("confirm-password");
     const submitButton = screen.getByRole("button");
 
     await act(async () => {
@@ -71,7 +80,11 @@ describe("AuthRegisterForm container", () => {
         target: { value: userCreate.password },
       });
 
-      fireEvent.click(submitButton);
+      fireEvent.change(confirmPasswordInput, {
+        target: { value: userCreate.confirmPassword },
+      });
+
+      fireEvent.submit(submitButton);
     });
 
     expect(authRepository.register).toHaveBeenCalledTimes(1);

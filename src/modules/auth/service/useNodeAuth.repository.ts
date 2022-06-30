@@ -19,9 +19,14 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
     const refreshTokenCookieRepository = RefreshTokenCookieRepository();
 
     return {
-      register: async (createUser): Promise<AccessCredentials | void> => {
+      register: async ({
+        firstName,
+        lastName,
+        email,
+        password,
+      }): Promise<AccessCredentials | void> => {
         const response = await fetch(`${authApiUrl}/register`, {
-          body: JSON.stringify({ ...createUser }),
+          body: JSON.stringify({ firstName, lastName, email, password }),
           headers: { "Content-Type": "application/json" },
           method: RequestMethod.POST,
           signal: abortController.signal,

@@ -6,6 +6,7 @@ import { MovementStore } from "src/modules/movements/store/MovementStore";
 import { Button } from "src/modules/shared/components/Button";
 import { Input } from "src/modules/shared/components/Input";
 import { Label } from "src/modules/shared/components/Label";
+import { RequiredField } from "src/modules/shared/components/RequiredField";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { useForm } from "src/modules/shared/hooks/useForm";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
@@ -73,7 +74,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
         className={`flex flex-col gap-2 ${className}`}
       >
         <div>
-          <Label htmlFor={ids.id}>{capitalize(names.id)}</Label>
+          <Label htmlFor={ids.id}>{names.id}</Label>
           <Input
             id={ids.id}
             name={names.id}
@@ -84,7 +85,9 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
         </div>
 
         <div>
-          <Label htmlFor={ids.concept}>{capitalize(names.concept)}</Label>
+          <Label htmlFor={ids.concept}>
+            {names.concept} <RequiredField />
+          </Label>
           <Input
             autoFocus
             id={ids.concept}
@@ -96,10 +99,13 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
         </div>
 
         <div>
-          <Label htmlFor={ids.amount}>{capitalize(names.amount)}</Label>
+          <Label htmlFor={ids.amount}>
+            {names.amount} <RequiredField />
+          </Label>
           <Input
             id={ids.amount}
             min={0}
+            step=".01"
             name={names.amount}
             onChange={handleChange}
             type="number"
@@ -108,7 +114,9 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
         </div>
 
         <div>
-          <Label htmlFor={ids.date}>{capitalize(names.date)}</Label>
+          <Label htmlFor={ids.date}>
+            {names.date} <RequiredField />
+          </Label>
           <Input
             id={ids.date}
             name={names.date}

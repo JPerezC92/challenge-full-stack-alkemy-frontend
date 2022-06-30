@@ -5,6 +5,7 @@ import { MovementsRepository } from "src/modules/movements/service/MovementsRepo
 import { Button } from "src/modules/shared/components/Button";
 import { Input } from "src/modules/shared/components/Input";
 import { Label } from "src/modules/shared/components/Label";
+import { RequiredField } from "src/modules/shared/components/RequiredField";
 import { Select } from "src/modules/shared/components/Select";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { useForm } from "src/modules/shared/hooks/useForm";
@@ -60,7 +61,9 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
         className={`flex w-full flex-col gap-2 rounded border border-cyan-200 bg-teal-300/10 p-2 shadow-md ${className}`}
       >
         <div>
-          <Label htmlFor={ids.concept}>{capitalize(names.concept)}</Label>
+          <Label htmlFor={ids.concept}>
+            {names.concept} <RequiredField />
+          </Label>
 
           <Input
             autoFocus
@@ -74,19 +77,24 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
         </div>
 
         <div>
-          <Label htmlFor={ids.amount}>{capitalize(names.amount)}</Label>
+          <Label htmlFor={ids.amount}>
+            {names.amount} <RequiredField />
+          </Label>
           <Input
             id={ids.amount}
             name={names.amount}
             onChange={handleChange}
             type="number"
+            step="0.1"
             value={formValues.amount}
             required
           />
         </div>
 
         <div>
-          <Label htmlFor={ids.date}>{capitalize(names.date)}</Label>
+          <Label htmlFor={ids.date}>
+            {names.date} <RequiredField />
+          </Label>
           <Input
             id={ids.date}
             name={names.date}
@@ -98,7 +106,9 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
         </div>
 
         <div>
-          <Label htmlFor={ids.type}>{capitalize(names.type)}</Label>
+          <Label htmlFor={ids.type}>
+            {names.type} <RequiredField />
+          </Label>
           <Select
             id={ids.type}
             name={names.type}
@@ -119,21 +129,11 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-2">
-          <Button
-            type="button"
-            secondary
-            outline
-            // className="rounded border border-orange-500 p-2 font-medium transition ease-in-out"
-            onClick={resetValues}
-          >
+          <Button type="button" secondary outline onClick={resetValues}>
             Clear
           </Button>
 
-          <Button
-            type="submit"
-            primary
-            // className="rounded bg-teal-400/50 p-2 font-medium transition ease-in-out hover:bg-teal-400"
-          >
+          <Button type="submit" primary>
             Save
           </Button>
         </div>

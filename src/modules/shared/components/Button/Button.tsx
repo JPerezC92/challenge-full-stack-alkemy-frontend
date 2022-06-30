@@ -39,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`rounded p-2 font-medium transition-all ease-in-out hover:shadow-md disabled:pointer-events-none disabled:border-gray-400 disabled:opacity-75 ${background} ${outlineColor} ${className}`}
+      className={`rounded p-2 font-medium transition-all ease-in-out hover:shadow-md disabled:pointer-events-none disabled:border-gray-400 disabled:opacity-60 ${background} ${outlineColor} ${className}`}
       {...props}
     >
       {children}

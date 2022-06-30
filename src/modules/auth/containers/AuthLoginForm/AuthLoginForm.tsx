@@ -5,6 +5,7 @@ import { AuthRepository } from "src/modules/auth/service/AuthRepository";
 import { Button } from "src/modules/shared/components/Button";
 import { Input } from "src/modules/shared/components/Input";
 import { Label } from "src/modules/shared/components/Label";
+import { RequiredField } from "src/modules/shared/components/RequiredField";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { useForm } from "src/modules/shared/hooks/useForm";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
@@ -55,24 +56,30 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
         <h1 className="center text-center text-xl font-bold">Login</h1>
 
         <div>
-          <Label htmlFor={ids.email}>{capitalize(names.email)}</Label>
+          <Label htmlFor={ids.email}>
+            {names.email} <RequiredField />
+          </Label>
           <Input
             id={ids.email}
             name={names.email}
             onChange={handleChange}
             type="text"
             value={formValues.email}
+            required
           />
         </div>
 
         <div>
-          <Label htmlFor={ids.password}>{capitalize(names.password)}</Label>
+          <Label htmlFor={ids.password}>
+            {names.password} <RequiredField />
+          </Label>
           <Input
             id={ids.password}
             name={names.password}
             onChange={handleChange}
             type="password"
             value={formValues.password}
+            required
           />
         </div>
 

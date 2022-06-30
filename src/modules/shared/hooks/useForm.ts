@@ -13,14 +13,22 @@ export const useForm = <Values = Record<string, unknown>>(
   const id = useId();
 
   const [values, setValues] = React.useState(initialValues);
+  const [validity, setValidity] = React.useState(() =>
+    Object.keys(initialValues).reduce(
+      (prev, current) => ({ ...prev, [current]: false }),
+      {} as { [k in keyof Values]: boolean }
+    )
+  );
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const valid = event.target.validity.valid;
       const { name, value } = event.target;
 
-      setValues({ ...values, [name]: value });
+      setValues((s) => ({ ...s, [name]: value }));
+      setValidity((s) => ({ ...s, [name]: valid }));
     },
-    [values]
+    []
   );
 
   const resetValues = useCallback(() => {
@@ -30,6 +38,8 @@ export const useForm = <Values = Record<string, unknown>>(
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+
+      if (!event.currentTarget.checkValidity()) return;
       onSubmit && onSubmit(values, resetValues);
     },
     [resetValues, onSubmit, values]
@@ -46,6 +56,7 @@ export const useForm = <Values = Record<string, unknown>>(
   }, {} as { [k in keyof Values]: k });
 
   return {
+    isValidForm: (Object.values(validity) as boolean[]).every((v) => v),
     handleChange,
     handleSubmit,
     formValues: values,

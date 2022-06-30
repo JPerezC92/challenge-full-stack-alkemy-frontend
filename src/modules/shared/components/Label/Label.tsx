@@ -11,7 +11,7 @@ export const Label: React.FC<LabelProps> = ({
   ...props
 }) => {
   return (
-    <label {...props} className={`block font-semibold ${className}`}>
+    <label {...props} className={`block font-semibold capitalize ${className}`}>
       {children}
     </label>
   );
