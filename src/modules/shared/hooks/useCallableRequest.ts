@@ -1,4 +1,5 @@
 import React from "react";
+import { isDevelopment } from "src/modules/shared/utils/environment";
 
 export const useCallableRequest = <Input = unknown>(
   fn: (props: {
@@ -19,7 +20,7 @@ export const useCallableRequest = <Input = unknown>(
 
         await fnResult(input);
       } catch (error) {
-        console.log({ error });
+        isDevelopment() && console.log({ error });
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
-import React, { ReactElement, ReactNode } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { ReactElement, ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
 
 import "styles/globals.css";
 

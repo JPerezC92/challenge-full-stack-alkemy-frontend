@@ -1,4 +1,5 @@
 import React from "react";
+import { isDevelopment } from "src/modules/shared/utils/environment";
 
 export const useRequest = (
   fn: (props: { abortController: AbortController }) => Promise<void>,
@@ -15,7 +16,7 @@ export const useRequest = (
       try {
         await fn({ abortController });
       } catch (error) {
-        console.log(error);
+        isDevelopment() && console.log({ error });
       }
     })();
 
