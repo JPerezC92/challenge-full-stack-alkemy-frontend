@@ -1,34 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Administración de presupuesto personal
 
-## Getting Started
+Esta es una solución para el reto Full Stack de Alkemy. **[Más información](https://github.com/mouredev/Monthly-App-Challenge-2022)**.
 
-First, run the development server:
+<img src="./public/preview-1.png" alt="drawing" width="300"/>
+<img src="./public/preview-2.png" alt="drawing" width="300"/>
+<img src="./public/preview-3.png" alt="drawing" width="700"/>
+<img src="./public/preview-4.png" alt="drawing" width="700"/>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Requerimientos
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Deberás desarrollar una API en Node.js junto a cualquiera de los siguientes frameworks, en sus versiones estables:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+  - Express
+  - Adonis
+  - Koa
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- En el caso de querer utilizar otro framework es posible, pero debe consultarse con anterioridad.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Los datos mostrados deben ser persistidos en una base de datos relacional. El esquema de
+  datos puede armarse según se considere apropiado en base a los requerimientos del
+  negocio. La API deberá exponer URLS que devuelvan datos en JSON.
 
-## Learn More
+- Estos datos en JSON deberán ser consumidos por un cliente, a través de peticiones AJAX.
+- El cliente puede ser armado con React.js.
+- El trabajo realizado se subirá a un repositorio.
 
-To learn more about Next.js, take a look at the following resources:
+- Esta es un tipo de aplicación con la que podemos practicar diseños de UI más elaborados. Intenta hacerla bonita y con animaciones!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Secciones
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Home
 
-## Deploy on Vercel
+- La pantalla de inicio deberá mostrar el balance actual, es decir, el resultante de los ingresos y egresos de dinero cargados, y un listado de los últimos 10 registrados.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ABM de operaciones (ingresos y egresos)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- La aplicación deberá contener:
+  - Formulario de registro de operación. El mismo deberá contener:
+    - Concepto
+    - Monto
+    - Fecha
+    - Tipo (ingreso o egreso)
+  - Listado de operaciones registradas según su tipo (ingreso o egreso).
+  - Desde el listado, se debe poder modificar o eliminar una operación registrada previamente. No debe ser posible modificar el tipo de operación (ingreso o egreso) una vez creada.
+
+## Bonus
+
+### Autenticación de usuarios
+
+Agregar un formulario de registro y login para permitir identificar al usuario que utiliza la
+aplicación, y vincular las operaciones registradas al usuario autenticado en el sistema,
+tanto para el listado y creación de nuevos registros. Los datos indispensables para permitir
+el ingreso deben ser un email y contraseña, pudiendo agregar los que se deseen.
