@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-
-import styles from "./Redirect.module.scss";
+import { SpinnerFullScreen } from "src/modules/shared/components/SpinnerFullScreen";
 
 type RedirectProps = {
   to: string;
@@ -17,9 +16,5 @@ export const Redirect: React.FC<RedirectProps> = ({ to, replace }) => {
     if (!replace) router.push(to);
   }, [to, router, replace]);
 
-  return (
-    <span role="alert" aria-busy="true">
-      ...Loading
-    </span>
-  );
+  return <SpinnerFullScreen />;
 };

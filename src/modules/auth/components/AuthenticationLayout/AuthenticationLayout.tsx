@@ -1,6 +1,7 @@
 import React from "react";
 import { AuthenticationProvider } from "src/modules/auth/components/AuthenticationLayout/AuthenticationProvider.context";
 import { useNodeAuthRepository } from "src/modules/auth/service/useNodeAuth.repository";
+import { SpinnerFullScreen } from "src/modules/shared/components/SpinnerFullScreen";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { useLoading } from "src/modules/shared/hooks/useLoading";
 import { isDefined } from "src/modules/shared/utils/isDefined";
@@ -67,11 +68,7 @@ export function AuthenticationLayout({
   }, [verifyRefreshToken]);
 
   if (isLoading) {
-    return (
-      <>
-        <>...Verifiying access credentials</>
-      </>
-    );
+    return <SpinnerFullScreen message="...Verifiying access credentials" />;
   }
 
   return (
