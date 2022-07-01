@@ -19,7 +19,6 @@ export const MovementsSection: React.FC<MovementsSectionProps> = ({
   const [movementType, setMovementType] = React.useState(MovementType.INCOME);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    console.log(e.target.value);
     setMovementType(e.target.value as MovementType);
   };
 

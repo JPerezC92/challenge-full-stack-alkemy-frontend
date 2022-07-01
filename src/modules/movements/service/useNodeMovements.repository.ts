@@ -51,7 +51,7 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
             (await response.json()) as MovementsGetEndpoint;
 
           if (movementsGetEndpoint.status !== JsendStatus.success) {
-            return console.log(movementsGetEndpoint);
+            return;
           }
 
           return {
