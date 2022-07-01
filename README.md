@@ -1,11 +1,52 @@
 # Administración de presupuesto personal
 
-Esta es una solución para el reto Full Stack de Alkemy. **[Más información](https://github.com/mouredev/Monthly-App-Challenge-2022)**.
+Esta es una solución para el reto Full Stack de Alkemy.
 
 <img src="./public/preview-1.png" alt="drawing" width="300"/>
 <img src="./public/preview-2.png" alt="drawing" width="300"/>
 <img src="./public/preview-3.png" alt="drawing" width="700"/>
 <img src="./public/preview-4.png" alt="drawing" width="700"/>
+
+## Relacionado
+
+El proyecto esta dividido en 2 repositorios
+
+- [Frontend](https://github.com/JPerezC92/challenge-full-stack-alkemy-frontend)
+- [Backend](https://github.com/JPerezC92/challenge-full-stack-alkemy-backend)
+
+## Variables de entorno
+
+Para iniciar este proyecto, tendras que añadir las siguientes variables de entorno a tu archivo .env
+
+`NEXT_PUBLIC_WEB_URL`
+
+`NEXT_PUBLIC_API_URL`
+
+## Como iniciar el proyecto
+
+Clonar el proyecto
+
+```bash
+  git clone https://github.com/JPerezC92/challenge-full-stack-alkemy-frontend.git
+```
+
+Ir al directorio del proyecto
+
+```bash
+  cd challenge-full-stack-alkemy-frontend
+```
+
+Instalar las dependencias
+
+```bash
+  npm install
+```
+
+Iniciar la aplicación
+
+```bash
+  npm run dev
+```
 
 ## Requerimientos
 
