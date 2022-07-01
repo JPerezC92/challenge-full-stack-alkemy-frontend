@@ -82,12 +82,13 @@ export const MovementRegisterForm: React.FC<MovementRegisterFormProps> = ({
           </Label>
           <Input
             id={ids.amount}
+            min={0}
             name={names.amount}
             onChange={handleChange}
-            type="number"
-            step="0.1"
-            value={formValues.amount}
             required
+            step="0.1"
+            type="number"
+            value={formValues.amount}
           />
         </div>
 

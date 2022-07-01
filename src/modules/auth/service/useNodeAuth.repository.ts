@@ -89,12 +89,14 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
       },
 
       refreshToken: async (): Promise<AccessCredentials | void> => {
+        const refreshTokenCookie = refreshTokenCookieRepository.get();
+
+        if (!refreshTokenCookie) return;
+
         const response = await fetch(`${authApiUrl}/refresh-token`, {
           headers: {
             "Content-Type": "application/json",
-            "x-refresh-token": formatBearerToken(
-              refreshTokenCookieRepository.get()
-            ),
+            "x-refresh-token": formatBearerToken(refreshTokenCookie),
           },
           method: RequestMethod.GET,
           signal: abortController.signal,

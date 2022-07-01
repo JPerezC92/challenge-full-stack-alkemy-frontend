@@ -95,6 +95,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
             onChange={handleChange}
             type="text"
             value={formValues.concept}
+            required
           />
         </div>
 
@@ -105,11 +106,12 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
           <Input
             id={ids.amount}
             min={0}
-            step=".01"
             name={names.amount}
             onChange={handleChange}
+            step=".01"
             type="number"
             value={formValues.amount}
+            required
           />
         </div>
 
@@ -123,6 +125,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
             onChange={handleChange}
             type="date"
             value={formValues.date}
+            required
           />
         </div>
 
