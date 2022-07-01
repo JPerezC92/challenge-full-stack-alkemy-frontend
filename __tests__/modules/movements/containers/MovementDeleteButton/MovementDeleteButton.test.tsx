@@ -1,5 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MovementDeleteButton } from "src/modules/movements/containers/MovementDeleteButton";
+import { MovementView } from "src/modules/movements/dto/MovementView";
+import { MovementType } from "src/modules/movements/models/MovementType";
 import { MovementsRepository } from "src/modules/movements/service/MovementsRepository";
 
 const movementsRepository: MovementsRepository = {
@@ -8,7 +10,13 @@ const movementsRepository: MovementsRepository = {
 
 const onDelete = jest.fn();
 
-const movementId = Date.now().toString();
+const movement: MovementView = {
+  id: Date.now().toString(),
+  amount: "",
+  concept: "concept",
+  date: "2020-01-01",
+  type: MovementType.INCOME,
+};
 
 describe("MovementDeleteButton container", () => {
   afterEach(() => {
@@ -18,10 +26,12 @@ describe("MovementDeleteButton container", () => {
   test("should render a button", () => {
     render(
       <MovementDeleteButton
-        movementId={movementId}
+        {...movement}
         movementsRepository={() => movementsRepository}
         onDelete={onDelete}
-      />
+      >
+        Delete
+      </MovementDeleteButton>
     );
 
     expect(screen.getByRole("button")).toBeInTheDocument();
@@ -30,10 +40,12 @@ describe("MovementDeleteButton container", () => {
   test("should call the delete method of the movements repository when the button is clicked", async () => {
     render(
       <MovementDeleteButton
-        movementId={movementId}
+        {...movement}
         movementsRepository={() => movementsRepository}
         onDelete={onDelete}
-      />
+      >
+        Delete
+      </MovementDeleteButton>
     );
 
     const button = screen.getByRole("button");
@@ -43,7 +55,7 @@ describe("MovementDeleteButton container", () => {
     });
 
     expect(movementsRepository.delete).toHaveBeenCalledTimes(1);
-    expect(movementsRepository.delete).toHaveBeenCalledWith(movementId);
+    expect(movementsRepository.delete).toHaveBeenCalledWith(movement);
     expect(onDelete).toHaveBeenCalledTimes(1);
     expect(onDelete).toHaveBeenCalledWith();
   });

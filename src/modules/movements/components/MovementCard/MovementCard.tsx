@@ -69,9 +69,9 @@ export const MovementCard: React.FC<MovementCardProps> = ({
 
           <MovementDeleteButton
             className="p-1"
-            movementId={id}
             movementsRepository={movementsRepository}
             onDelete={handleOnDelete}
+            {..._movementView}
           >
             <i>
               <MdDeleteOutline />

@@ -1,5 +1,5 @@
+import { MovementView } from "src/modules/movements/dto/MovementView";
 import { Movement } from "src/modules/movements/models/Movement";
-import { MovementView } from "../dto/MovementView";
 
 export function MovementDomainToView(Movement: Movement): MovementView {
   return {

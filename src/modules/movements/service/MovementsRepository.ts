@@ -15,5 +15,5 @@ export interface MovementsRepository {
     movementId: Movement["id"];
     movement: Movement;
   }): Promise<void>;
-  delete(movementId: Movement["id"]): Promise<void>;
+  delete(movement: Pick<Movement, "id" | "concept">): Promise<void>;
 }

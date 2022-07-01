@@ -4,7 +4,6 @@ import { PrivateRoute } from "src/modules/auth/containers/PrivateRoute";
 import { MovementsLayout } from "src/modules/movements/components/MovementsLayout";
 import { MovementsSection } from "src/modules/movements/components/MovementsSection";
 import { MovementRegisterForm } from "src/modules/movements/containers/MovementRegisterForm";
-import { MovementsCollection } from "src/modules/movements/containers/MovementsCollection";
 import {
   MovementEventActionType,
   useMovementEventState,

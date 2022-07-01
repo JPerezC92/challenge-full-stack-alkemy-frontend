@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import { useCredentialsState } from "src/modules/auth/containers/PrivateRoute/CredentialsProvider.context";
 import { MovementEndpointToDomain } from "src/modules/movements/adapters/MovementEndpointToDomain";
 import { MovementsDeleteEndpoint } from "src/modules/movements/dto/MovementsDeleteEndpoint";
@@ -9,7 +10,11 @@ import { MovementsPutEndpoint } from "src/modules/movements/dto/MovementsPutEndp
 import { Movement } from "src/modules/movements/models/Movement";
 import { JsendStatus } from "src/modules/shared/service/JsendResponse";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
-import { BASE_API_URL } from "src/modules/shared/utils/constants";
+import { RequestMethod } from "src/modules/shared/service/RequestMethod";
+import {
+  BASE_API_URL,
+  TOAST_DURATION,
+} from "src/modules/shared/utils/constants";
 import { formatBearerToken } from "src/modules/shared/utils/formatBearerToken";
 import { MovementsRepository } from "./MovementsRepository";
 
@@ -36,7 +41,7 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
           const response = await fetch(
             `${movementsApiUrl}/?${searchParams.toString()}`,
             {
-              method: "GET",
+              method: RequestMethod.GET,
               signal: abortController.signal,
               headers: { Authorization: formatBearerToken(accessToken) },
             }
@@ -63,20 +68,22 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
               "Content-Type": "application/json",
               Authorization: formatBearerToken(accessToken),
             },
-            method: "POST",
+            method: RequestMethod.POST,
             signal: abortController.signal,
           });
 
           const movementsPostEndpoint =
             (await response.json()) as MovementsPostEndpoint;
 
-          if (movementsPostEndpoint.status !== JsendStatus.success) {
-            console.log({ movementsPostEndpoint });
+          if (movementsPostEndpoint.status === JsendStatus.success) {
+            toast.success(`${movementCreate.concept} - Created`, {
+              autoClose: TOAST_DURATION.MIN,
+            });
           }
         },
         findById: async (movementId): Promise<Movement | undefined> => {
           const response = await fetch(`${movementsApiUrl}/${movementId}`, {
-            method: "GET",
+            method: RequestMethod.GET,
             signal: abortController.signal,
             headers: { Authorization: formatBearerToken(accessToken) },
           });
@@ -100,28 +107,34 @@ export function useNodeMovementsRepository(): MyRepository<MovementsRepository> 
               "Content-Type": "application/json",
               Authorization: formatBearerToken(accessToken),
             },
-            method: "PUT",
+            method: RequestMethod.PUT,
             signal: abortController.signal,
           });
 
           const result = (await response.json()) as MovementsPutEndpoint;
 
-          if (result.status !== JsendStatus.success) {
-            console.log(result);
+          if (result.status === JsendStatus.success) {
+            toast.success(`${movementUpdate.concept} - Updated`, {
+              autoClose: TOAST_DURATION.MIN,
+            });
           }
         },
 
-        delete: async (movementId: Movement["id"]): Promise<void> => {
-          const response = await fetch(`${movementsApiUrl}/${movementId}`, {
-            method: "DELETE",
+        delete: async (
+          movement: Pick<Movement, "id" | "concept">
+        ): Promise<void> => {
+          const response = await fetch(`${movementsApiUrl}/${movement.id}`, {
+            method: RequestMethod.DELETE,
             signal: abortController.signal,
             headers: { Authorization: formatBearerToken(accessToken) },
           });
 
           const result = (await response.json()) as MovementsDeleteEndpoint;
 
-          if (result.status !== JsendStatus.success) {
-            console.log(result);
+          if (result.status === JsendStatus.success) {
+            toast.success(`${movement.concept} - Deleted`, {
+              autoClose: TOAST_DURATION.MIN,
+            });
           }
         },
       };

@@ -4,28 +4,28 @@ import { MovementsRepository } from "src/modules/movements/service/MovementsRepo
 import { Button } from "src/modules/shared/components/Button";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
+import { MovementView } from "../../dto/MovementView";
 
 type MovementDeleteButtonProps = {
   className?: string;
-  movementId: Movement["id"];
   movementsRepository: MyRepository<MovementsRepository>;
   onDelete?: () => void;
-  children: React.ReactNode;
-};
+  children?: React.ReactNode;
+} & MovementView;
 
 export const MovementDeleteButton: React.FC<MovementDeleteButtonProps> = ({
-  movementId,
   movementsRepository,
   onDelete,
   className,
   children,
+  ...movementView
 }) => {
   const [deleteMovement] = useCallableRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
 
-      return async ({ movementId }: { movementId: Movement["id"] }) => {
-        await _movementsRepository.delete(movementId);
+      return async (movement: Pick<Movement, "id" | "concept">) => {
+        await _movementsRepository.delete(movement);
         onDelete?.();
       };
     },
@@ -39,7 +39,7 @@ export const MovementDeleteButton: React.FC<MovementDeleteButtonProps> = ({
         outline
         className={className}
         type="button"
-        onClick={() => deleteMovement({ movementId })}
+        onClick={() => deleteMovement(movementView)}
       >
         {children}
       </Button>

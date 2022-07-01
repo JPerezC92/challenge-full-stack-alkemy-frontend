@@ -2,6 +2,7 @@ import React from "react";
 import { useCredentialsState } from "src/modules/auth/containers/PrivateRoute/CredentialsProvider.context";
 import { BalanceEndpoint } from "src/modules/budgets/dto/BalanceEndpoint";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
+import { RequestMethod } from "src/modules/shared/service/RequestMethod";
 import { BASE_API_URL } from "src/modules/shared/utils/constants";
 import { formatBearerToken } from "src/modules/shared/utils/formatBearerToken";
 import { BudgetsRepository } from "./BudgetsRepository";
@@ -17,7 +18,7 @@ export function useNodeBudgetsRepository(): MyRepository<BudgetsRepository> {
         getBalance: async (): Promise<number | undefined> => {
           const response = await fetch(`${budgetsApiUrl}/balance`, {
             signal: abortController.signal,
-            method: "GET",
+            method: RequestMethod.GET,
             headers: { Authorization: formatBearerToken(accessToken) },
           });
 

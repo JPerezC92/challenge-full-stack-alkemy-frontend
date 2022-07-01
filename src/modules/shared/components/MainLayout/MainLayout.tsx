@@ -7,8 +7,8 @@ import { AuthenticationActionType } from "src/modules/auth/components/Authentica
 import { AuthLogoutButton } from "src/modules/auth/containers/AuthLogoutButton";
 import { useCredentialsState } from "src/modules/auth/containers/PrivateRoute/CredentialsProvider.context";
 import { useNodeAuthRepository } from "src/modules/auth/service/useNodeAuth.repository";
+import { useToggle } from "src/modules/shared/hooks/useToggle";
 import { mainRoutes } from "src/modules/shared/routes/web";
-import { useToggle } from "../../hooks/useToggle";
 
 const navList = [
   { name: "Home", route: mainRoutes.home },

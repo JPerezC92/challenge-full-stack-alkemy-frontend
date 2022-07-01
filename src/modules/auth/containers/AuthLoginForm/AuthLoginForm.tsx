@@ -63,7 +63,7 @@ export const AuthLoginForm: React.FC<AuthLoginFormProps> = ({
             id={ids.email}
             name={names.email}
             onChange={handleChange}
-            type="text"
+            type="email"
             value={formValues.email}
             required
           />

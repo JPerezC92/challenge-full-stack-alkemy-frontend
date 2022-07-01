@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import { AuthLoginPostEndpoint } from "src/modules/auth/dto/AuthLoginPostEndpoint";
 import { AuthRefreshTokenGetEndpoint } from "src/modules/auth/dto/AuthRefreshTokenGetEndpoint";
 import { AuthRegisterPostEndpoint } from "src/modules/auth/dto/AuthRegisterPostEndpoint";
@@ -34,7 +35,10 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
 
         const result = (await response.json()) as AuthRegisterPostEndpoint;
 
-        if (result.status !== JsendStatus.success) return;
+        if (result.status !== JsendStatus.success) {
+          toast.warning(result.message, { autoClose: 5000 });
+          return;
+        }
 
         const { accessToken, refreshToken, user } = result.data;
 
@@ -53,7 +57,10 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
 
         const result = (await response.json()) as AuthLoginPostEndpoint;
 
-        if (result.status !== JsendStatus.success) return;
+        if (result.status !== JsendStatus.success) {
+          toast.warning(result.message, { autoClose: 5000 });
+          return;
+        }
 
         const { accessToken, refreshToken, user } = result.data;
 
@@ -71,7 +78,10 @@ export function useNodeAuthRepository(): MyRepository<AuthRepository> {
 
         const result = (await response.json()) as AuthLogoutTokenGetEndpoint;
 
-        if (result.status !== JsendStatus.success) return;
+        if (result.status !== JsendStatus.success) {
+          toast.warning(result.message, { autoClose: 5000 });
+          return;
+        }
 
         refreshTokenCookieRepository.remove();
 

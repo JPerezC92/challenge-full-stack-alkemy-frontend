@@ -1,6 +1,5 @@
 import React from "react";
-import { UserEndpoint } from "src/modules/auth/dto/UserEndpoint";
-import { AuthenticationState } from "../../components/AuthenticationLayout/state/authenticationReducer";
+import { AuthenticationState } from "src/modules/auth/components/AuthenticationLayout/state/authenticationReducer";
 
 interface CredentialsContextState
   extends Required<Pick<AuthenticationState, "user" | "accessToken">> {}
