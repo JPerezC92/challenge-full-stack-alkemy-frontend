@@ -1,16 +1,16 @@
 import React from "react";
 import { isDevelopment } from "src/modules/shared/utils/environment";
 
-export const useCallableRequest = <Input = unknown>(
+export const useCallableRequest = <Input extends unknown[]>(
   fn: (props: {
     abortController: AbortController;
-  }) => Promise<(input: Input) => Promise<void>>,
+  }) => Promise<(...args: Input) => Promise<void>>,
   deps: unknown[] | undefined = []
 ) => {
   const abortControllerRef = React.useRef<AbortController>();
 
   const execute: Awaited<ReturnType<typeof fn>> = React.useCallback(
-    async (input) => {
+    async (...input) => {
       abortControllerRef.current?.abort();
       const abortController = new AbortController();
       abortControllerRef.current = abortController;
@@ -18,7 +18,7 @@ export const useCallableRequest = <Input = unknown>(
       try {
         const fnResult = await fn({ abortController });
 
-        await fnResult(input);
+        await fnResult(...input);
       } catch (error) {
         isDevelopment() && console.log({ error });
       }
