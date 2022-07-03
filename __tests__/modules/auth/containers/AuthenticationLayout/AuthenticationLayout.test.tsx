@@ -37,7 +37,7 @@ const authRepository: AuthRepository = {
     .mockResolvedValue(accessCredentials),
   login: jest.fn(),
   register: jest.fn(),
-};
+} as unknown as AuthRepository;
 
 jest
   .spyOn(useNodeAuthRepository, "useNodeAuthRepository")
@@ -67,8 +67,6 @@ describe("AuthenticationLayout", () => {
       </AuthenticationLayout>
     );
 
-    fireEvent.load(window);
-
     await waitForElementToBeRemoved(() => screen.queryByText(/verifiying/i));
 
     expect(await screen.findByText(/testing/i)).toBeInTheDocument();
@@ -81,8 +79,6 @@ describe("AuthenticationLayout", () => {
       </AuthenticationLayout>
     );
 
-    fireEvent.load(window);
-
     await waitForElementToBeRemoved(() => screen.queryByText(/verifiying/i));
 
     expect(screen.getByText(/testing/i)).toBeInTheDocument();
@@ -94,8 +90,6 @@ describe("AuthenticationLayout", () => {
         <div>Testing</div>
       </AuthenticationLayout>
     );
-
-    fireEvent.load(window);
 
     await waitForElementToBeRemoved(() => screen.queryByText(/verifiying/i));
 

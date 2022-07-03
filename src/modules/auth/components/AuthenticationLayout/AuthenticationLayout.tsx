@@ -5,6 +5,7 @@ import { SpinnerFullScreen } from "src/modules/shared/components/SpinnerFullScre
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { useLoading } from "src/modules/shared/hooks/useLoading";
 import { isDefined } from "src/modules/shared/utils/isDefined";
+import { useIsMounted } from "../../../shared/hooks/useIsMounted";
 import { AuthenticationActionType } from "./state/authenticationAction";
 import {
   authenticationInitialState,
@@ -25,6 +26,7 @@ export function AuthenticationLayout({
   children,
   Route,
 }: AuthenticationLayoutProps) {
+  const isMounted = useIsMounted();
   const authRepository = useNodeAuthRepository();
   const [state, authenticationDispatch] = React.useReducer(
     authenticationReducer,
@@ -62,10 +64,8 @@ export function AuthenticationLayout({
   );
 
   React.useEffect(() => {
-    window.addEventListener("load", verifyRefreshToken);
-
-    return () => window.removeEventListener("load", verifyRefreshToken);
-  }, [verifyRefreshToken]);
+    if (isMounted()) verifyRefreshToken();
+  }, [isMounted, verifyRefreshToken]);
 
   if (isLoading) {
     return <SpinnerFullScreen message="...Verifiying access credentials" />;
