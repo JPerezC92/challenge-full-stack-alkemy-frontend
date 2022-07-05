@@ -18,7 +18,6 @@ export const MovementsMostRecents: React.FC<MovementsMostRecentsProps> = ({
   useRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
-      const _movementsListStore = movementListStore();
 
       const result = await _movementsRepository.query({
         limit: 10,
@@ -27,7 +26,7 @@ export const MovementsMostRecents: React.FC<MovementsMostRecentsProps> = ({
 
       if (!result) return;
 
-      _movementsListStore.updateMovementList(result.movementList);
+      movementListStore.updateMovementList(result.movementList);
     },
     [movementListStore, movementsRepository]
   );

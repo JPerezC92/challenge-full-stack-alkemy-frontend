@@ -4,7 +4,8 @@ import { AuthenticationProvider } from "src/modules/auth/components/Authenticati
 import { useNodeAuthRepository } from "src/modules/auth/service/useNodeAuth.repository";
 import { SpinnerFullScreen } from "src/modules/shared/components/SpinnerFullScreen";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
-import { isDefined } from "src/modules/shared/utils/isDefined";
+import { isAbortError } from "src/modules/shared/utils/asserts/isAbortError";
+import { isDefined } from "src/modules/shared/utils/asserts/isDefined";
 import { AuthenticationActionType } from "./state/authenticationAction";
 import {
   authenticationInitialState,
@@ -31,10 +32,6 @@ export function AuthenticationLayout({
     authenticationReducer,
     authenticationInitialState
   );
-
-  function isAbortError(error: any): boolean {
-    return (error as DOMException)?.code === DOMException.ABORT_ERR;
-  }
 
   const [verifyRefreshToken] = useCallableRequest(
     async ({ abortController }) => {

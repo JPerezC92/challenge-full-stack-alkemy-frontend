@@ -35,7 +35,7 @@ const movementsRepository: MovementsRepository = {
 
 jest.spyOn(useMovementListState, "useMovementListState").mockReturnValue({
   movementList,
-  movementListStore: () => movementListStore,
+  movementListStore: movementListStore,
 });
 jest
   .spyOn(useNodeMovementsRepository, "useNodeMovementsRepository")

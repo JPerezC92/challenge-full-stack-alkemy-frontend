@@ -19,7 +19,7 @@ jest
   .spyOn(useBudgetBalanceState, "useBudgetBalanceState")
   .mockImplementation(() => ({
     balance,
-    budgetBalanceStore: () => budgetBalanceStore,
+    budgetBalanceStore: budgetBalanceStore,
   }));
 
 describe("BudgetBalance component", () => {

@@ -34,7 +34,7 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
   const [findMovements] = useCallableRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
-      const _movementListStore = movementListStore();
+
       return async ({ movementType }: { movementType: MovementType }) => {
         const result = await _movementsRepository.query({
           movementType,
@@ -45,7 +45,7 @@ export const MovementsCollection: React.FC<MovementsCollectionProps> = ({
 
         if (!result) return;
 
-        _movementListStore.updateMovementList(result.movementList);
+        movementListStore.updateMovementList(result.movementList);
         updatePagesCount(result.pages);
       };
     },

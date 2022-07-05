@@ -45,7 +45,7 @@ describe("MovementEditForm container", () => {
     render(
       <MovementEditForm
         movementsRepository={() => movementsRepository}
-        movementStore={() => movementStore}
+        movementStore={movementStore}
         toggleIsEditing={toggleIsEditing}
         {...MovementDomainToView(movement)}
       />
@@ -63,7 +63,7 @@ describe("MovementEditForm container", () => {
     render(
       <MovementEditForm
         movementsRepository={() => movementsRepository}
-        movementStore={() => movementStore}
+        movementStore={movementStore}
         toggleIsEditing={toggleIsEditing}
         {...MovementDomainToView(movement)}
       />
@@ -79,7 +79,7 @@ describe("MovementEditForm container", () => {
     render(
       <MovementEditForm
         movementsRepository={() => movementsRepository}
-        movementStore={() => movementStore}
+        movementStore={movementStore}
         toggleIsEditing={toggleIsEditing}
         {...MovementDomainToView(movement)}
       />

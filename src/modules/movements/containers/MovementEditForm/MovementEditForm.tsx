@@ -10,12 +10,10 @@ import { RequiredField } from "src/modules/shared/components/RequiredField";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
 import { useForm } from "src/modules/shared/hooks/useForm";
 import { MyRepository } from "src/modules/shared/service/MyRepository";
-import { MyStore } from "src/modules/shared/store/MyStore";
-import { capitalize } from "src/modules/shared/utils/capitalize";
 
 type MovementEditFormProps = {
   movementsRepository: MyRepository<MovementsRepository>;
-  movementStore: MyStore<MovementStore>;
+  movementStore: MovementStore;
   toggleIsEditing: () => void;
   className?: string;
 } & MovementView;
@@ -30,7 +28,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
   const [updateMovement] = useCallableRequest(
     async ({ abortController }) => {
       const _movementsRepository = movementsRepository({ abortController });
-      const _movementStore = movementStore();
+
       return async (movement: Movement) => {
         await _movementsRepository.update({
           movementId: movementView.id,
@@ -41,7 +39,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
 
         if (!_movement) return;
 
-        _movementStore.updateMovement(_movement);
+        movementStore.updateMovement(_movement);
       };
     },
     [movementView.id, movementStore, movementsRepository]

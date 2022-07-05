@@ -1,6 +1,5 @@
 import React from "react";
 
-import { MyStore } from "src/modules/shared/store/MyStore";
 import { BudgetBalanceStore } from "./BudgetBalanceStore";
 
 export interface BudgetBalanceState
