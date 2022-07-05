@@ -22,5 +22,5 @@ export const useRequest = (
 
     return () => abortController.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...deps]);
+  }, deps);
 };

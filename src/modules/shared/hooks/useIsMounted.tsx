@@ -1,13 +1,15 @@
 import React from "react";
 
 export function useIsMounted() {
-  const [isMounted, setIsMounted] = React.useState(false);
+  const isMounted = React.useRef(false);
 
   React.useEffect(() => {
-    setIsMounted(true);
+    isMounted.current = true;
 
-    return () => setIsMounted(false);
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
-  return React.useCallback(() => isMounted, [isMounted]);
+  return isMounted;
 }

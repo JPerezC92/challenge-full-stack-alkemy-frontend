@@ -16,12 +16,12 @@ export const BudgetBalance: React.FC<BudgetBalanceProps> = ({
   useRequest(
     async ({ abortController }) => {
       const _budgetsRepository = budgetsRepository({ abortController });
-      const _budgetBalanceStore = budgetBalanceStore();
+
       const balance = await _budgetsRepository.getBalance();
 
       if (!balance) return;
 
-      _budgetBalanceStore.updateBalance(balance);
+      budgetBalanceStore.updateBalance(balance);
     },
     [budgetBalanceStore, budgetsRepository]
   );

@@ -1,16 +1,16 @@
 import React from "react";
+import { toast } from "react-toastify";
 import { AuthenticationProvider } from "src/modules/auth/components/AuthenticationLayout/AuthenticationProvider.context";
 import { useNodeAuthRepository } from "src/modules/auth/service/useNodeAuth.repository";
 import { SpinnerFullScreen } from "src/modules/shared/components/SpinnerFullScreen";
 import { useCallableRequest } from "src/modules/shared/hooks/useCallableRequest";
-import { useLoading } from "src/modules/shared/hooks/useLoading";
 import { isDefined } from "src/modules/shared/utils/isDefined";
-import { useIsMounted } from "../../../shared/hooks/useIsMounted";
 import { AuthenticationActionType } from "./state/authenticationAction";
 import {
   authenticationInitialState,
   authenticationReducer,
   AuthenticationState,
+  IsLoadingEnum,
 } from "./state/authenticationReducer";
 
 export interface AuthRouteProps extends AuthenticationState {
@@ -26,13 +26,15 @@ export function AuthenticationLayout({
   children,
   Route,
 }: AuthenticationLayoutProps) {
-  const isMounted = useIsMounted();
   const authRepository = useNodeAuthRepository();
   const [state, authenticationDispatch] = React.useReducer(
     authenticationReducer,
     authenticationInitialState
   );
-  const { isLoading, startLoading, finishLoading } = useLoading(true);
+
+  function isAbortError(error: any): boolean {
+    return (error as DOMException)?.code === DOMException.ABORT_ERR;
+  }
 
   const [verifyRefreshToken] = useCallableRequest(
     async ({ abortController }) => {
@@ -40,7 +42,7 @@ export function AuthenticationLayout({
 
       return async () => {
         try {
-          startLoading();
+          authenticationDispatch({ type: AuthenticationActionType.Loading });
           const accessCredentials = await _authRepository.refreshToken();
 
           if (
@@ -48,26 +50,37 @@ export function AuthenticationLayout({
             !isDefined(accessCredentials.user) ||
             !isDefined(accessCredentials.accessToken)
           ) {
-            return;
+            return authenticationDispatch({
+              type: AuthenticationActionType.Logout,
+            });
           }
 
           authenticationDispatch({
             type: AuthenticationActionType.Login,
             payload: { ...accessCredentials },
           });
-        } finally {
-          finishLoading();
+        } catch (error) {
+          if (isAbortError(error)) return;
+
+          authenticationDispatch({
+            type: AuthenticationActionType.LoginError,
+            payload: { errorMessage: "There was an error logging in" },
+          });
         }
       };
     },
-    [authRepository, finishLoading, startLoading]
+    [authRepository]
   );
 
   React.useEffect(() => {
-    if (isMounted()) verifyRefreshToken();
-  }, [isMounted, verifyRefreshToken]);
+    verifyRefreshToken();
+  }, [verifyRefreshToken]);
 
-  if (isLoading) {
+  React.useEffect(() => {
+    if (state.errorMessage) toast.error(state.errorMessage);
+  }, [state.errorMessage]);
+
+  if (state.isLoading !== IsLoadingEnum.SUCCEEDED) {
     return <SpinnerFullScreen message="...Verifiying access credentials" />;
   }
 
